@@ -1,0 +1,7 @@
+.page {
+  max-width: 1920px;
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 40px 320px 40px 320px;
+}
