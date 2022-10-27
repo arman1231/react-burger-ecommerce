@@ -1,0 +1,22 @@
+.main {
+  max-width: 1240px;
+  min-width: 320px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainDivider {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    gap: 80px;
+}
+.burgerIngredients {
+  flex: 1;
+
+}
+
+.burgerConstructor {
+  flex: 1;
+}
