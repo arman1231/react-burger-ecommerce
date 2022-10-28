@@ -4,7 +4,7 @@
 }
 
 .tabList::-webkit-scrollbar {
-  width: 1em;
+  width: 8px;
 }
 
 .tabList::-webkit-scrollbar-track {
@@ -25,7 +25,7 @@
   gap: 32px 24px;
 }
 
-.image {
+/* .image {
   width: 240px;
   height: 120px;
 }
@@ -35,7 +35,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* margin-bottom: 54px; */
   position: relative;
 }
 
@@ -46,4 +45,4 @@
 
 .counter {
   position: absolute;
-}
+} */

@@ -10,7 +10,7 @@
     display: flex;
     flex-wrap: wrap;
     margin: 0;
-    gap: 80px;
+    gap: 60px;
 }
 .burgerIngredients {
   flex: 1;

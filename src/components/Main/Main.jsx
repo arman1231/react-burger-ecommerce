@@ -9,7 +9,7 @@ export default function Main({ data }) {
       <h1 className="text text_type_main-large pt-10 pb-5 m-0">Соберите бургер</h1>
       <div className={MainStyles.mainDivider}>
         <section className={MainStyles.burgerIngredients}>
-          <BurgerIngredients />
+          <BurgerIngredients data={data} />
         </section>
         <section className={MainStyles.burgerConstructor}>
           <BurgerConstructor data={data} />

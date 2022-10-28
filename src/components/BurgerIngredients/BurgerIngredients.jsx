@@ -1,18 +1,21 @@
-import {
-  Counter,
-  CurrencyIcon,
-  Tab,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
-import bun01 from "../../images/bun-01.svg";
-import bun02 from "../../images/bun-02.svg";
-import sauce02 from "../../images/sauce-02.svg";
-import sauce04 from "../../images/sauce-04.svg";
-
-
+import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
 import BurgerIngredientsStyles from "./BurgerIngredients.module.css";
+import PropTypes from "prop-types";
 
-export default function BurgerIngredients() {
+const burgerIngredientsPropTypes = PropTypes.shape({
+  _id: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
+});
+BurgerIngredients.propTypes = {
+  data: burgerIngredientsPropTypes,
+};
+
+export default function BurgerIngredients({ data }) {
   const [current, setCurrent] = React.useState("Булки");
   return (
     <>
@@ -35,200 +38,31 @@ export default function BurgerIngredients() {
         <div className={BurgerIngredientsStyles.tab}>
           <h2 className="text text_type_main-medium pt-10 pb-6">Булки</h2>
           <ul className={BurgerIngredientsStyles.list}>
-            <li className={BurgerIngredientsStyles.item}>
-              <img
-                className={BurgerIngredientsStyles.image}
-                src={bun02}
-                alt=""
-              />
-              <Counter
-                className={BurgerIngredientsStyles.counter}
-                count={1}
-                size="default"
-              />
-              <div className={`${BurgerIngredientsStyles.info} pt-1 pb-1`}>
-                <span
-                  className={`${BurgerIngredientsStyles.price} text text_type_digits-default mr-2`}
-                >
-                  20
-                </span>
-                <CurrencyIcon type="primary" />
-              </div>
-              <h3 className="text text_type_main-default mb-6">
-                Краторная булка N-200i
-              </h3>
-            </li>
-            <li className={BurgerIngredientsStyles.item}>
-              <img
-                className={BurgerIngredientsStyles.image}
-                src={bun01}
-                alt=""
-              />
-              {/* <Counter
-                className={BurgerIngredientsStyles.counter}
-                count={1}
-                size="default"
-              /> */}
-              <div className={`${BurgerIngredientsStyles.info} pt-1 pb-1`}>
-                <span
-                  className={`${BurgerIngredientsStyles.price} text text_type_digits-default mr-2`}
-                >
-                  20
-                </span>
-                <CurrencyIcon type="primary" />
-              </div>
-              <h3 className="text text_type_main-default mb-6">
-                Флюоресцентная булка R2-D3
-              </h3>
-            </li>
+            {data
+              .filter((el) => el.type === "bun")
+              .map((el) => (
+                <BurgerIngridient {...el} />
+              ))}
           </ul>
         </div>
         <div className={BurgerIngredientsStyles.tab}>
           <h2 className="text text_type_main-medium pt-10 pb-6">Соусы</h2>
           <ul className={BurgerIngredientsStyles.list}>
-            <li className={BurgerIngredientsStyles.item}>
-              <img
-                className={BurgerIngredientsStyles.image}
-                src={sauce02}
-                alt=""
-              />
-              {/* <Counter
-                className={BurgerIngredientsStyles.counter}
-                count={1}
-                size="default"
-              /> */}
-              <div className={`${BurgerIngredientsStyles.info} pt-1 pb-1`}>
-                <span
-                  className={`${BurgerIngredientsStyles.price} text text_type_digits-default mr-2`}
-                >
-                  30
-                </span>
-                <CurrencyIcon type="primary" />
-              </div>
-              <h3 className="text text_type_main-default mb-6">
-              Соус Spicy-X
-              </h3>
-            </li>
-            <li className={BurgerIngredientsStyles.item}>
-              <img
-                className={BurgerIngredientsStyles.image}
-                src={sauce04}
-                alt=""
-              />
-              {/* <Counter
-                className={BurgerIngredientsStyles.counter}
-                count={1}
-                size="default"
-              /> */}
-              <div className={`${BurgerIngredientsStyles.info} pt-1 pb-1`}>
-                <span
-                  className={`${BurgerIngredientsStyles.price} text text_type_digits-default mr-2`}
-                >
-                  30
-                </span>
-                <CurrencyIcon type="primary" />
-              </div>
-              <h3 className="text text_type_main-default mb-6">
-              Соус фирменный Space Sauce
-              </h3>
-            </li>
-            <li className={BurgerIngredientsStyles.item}>
-              <img
-                className={BurgerIngredientsStyles.image}
-                src={sauce04}
-                alt=""
-              />
-              {/* <Counter
-                className={BurgerIngredientsStyles.counter}
-                count={1}
-                size="default"
-              /> */}
-              <div className={`${BurgerIngredientsStyles.info} pt-1 pb-1`}>
-                <span
-                  className={`${BurgerIngredientsStyles.price} text text_type_digits-default mr-2`}
-                >
-                  30
-                </span>
-                <CurrencyIcon type="primary" />
-              </div>
-              <h3 className="text text_type_main-default mb-6">
-              Соус фирменный Space Sauce
-              </h3>
-            </li>
-            <li className={BurgerIngredientsStyles.item}>
-              <img
-                className={BurgerIngredientsStyles.image}
-                src={bun02}
-                alt=""
-              />
-              <Counter
-                className={BurgerIngredientsStyles.counter}
-                count={1}
-                size="default"
-              />
-              <div className={`${BurgerIngredientsStyles.info} pt-1 pb-1`}>
-                <span
-                  className={`${BurgerIngredientsStyles.price} text text_type_digits-default mr-2`}
-                >
-                  20
-                </span>
-                <CurrencyIcon type="primary" />
-              </div>
-              <h3 className="text text_type_main-default mb-6">
-                Флюоресцентная булка R2-D3
-              </h3>
-            </li>
+            {data
+              .filter((el) => el.type === "sauce")
+              .map((el) => (
+                <BurgerIngridient {...el} />
+              ))}
           </ul>
         </div>
         <div className={BurgerIngredientsStyles.tab}>
           <h2 className="text text_type_main-medium pt-10 pb-6">Начинки</h2>
           <ul className={BurgerIngredientsStyles.list}>
-            <li className={BurgerIngredientsStyles.item}>
-              <img
-                className={BurgerIngredientsStyles.image}
-                src={bun02}
-                alt=""
-              />
-              <Counter
-                className={BurgerIngredientsStyles.counter}
-                count={1}
-                size="default"
-              />
-              <div className={`${BurgerIngredientsStyles.info} pt-1 pb-1`}>
-                <span
-                  className={`${BurgerIngredientsStyles.price} text text_type_digits-default mr-2`}
-                >
-                  20
-                </span>
-                <CurrencyIcon type="primary" />
-              </div>
-              <h3 className="text text_type_main-default mb-6">
-                Краторная булка N-200i
-              </h3>
-            </li>
-            <li className={BurgerIngredientsStyles.item}>
-              <img
-                className={BurgerIngredientsStyles.image}
-                src={bun02}
-                alt=""
-              />
-              <Counter
-                className={BurgerIngredientsStyles.counter}
-                count={1}
-                size="default"
-              />
-              <div className={`${BurgerIngredientsStyles.info} pt-1 pb-1`}>
-                <span
-                  className={`${BurgerIngredientsStyles.price} text text_type_digits-default mr-2`}
-                >
-                  20
-                </span>
-                <CurrencyIcon type="primary" />
-              </div>
-              <h3 className="text text_type_main-default mb-6">
-                Флюоресцентная булка R2-D3
-              </h3>
-            </li>
+            {data
+              .filter((el) => el.type === "main")
+              .map((el) => (
+                <BurgerIngridient {...el} />
+              ))}
           </ul>
         </div>
       </div>
