@@ -1,0 +1,22 @@
+.burgerConstructor {
+    max-height: 80vh;
+    overflow-y: scroll;
+}
+.draggable {
+    position: relative;
+}
+.draggable::before {
+    content: "";
+    position: absolute;
+    
+    background-image: url(../../images/drag.svg);
+    width: 13px;
+    height: 18px;
+    top: 30px;
+    left: -25px;
+  }
+.fixed {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
