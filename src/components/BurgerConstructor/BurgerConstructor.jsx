@@ -9,18 +9,18 @@ import bun02 from "../../images/bun-02.svg";
 import PropTypes from 'prop-types';
 
 
+const burgerIngredientsPropTypes = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
+});
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
+};
 
 export default function BurgerConstructor({ data }) {
-    const burgerConstructorPropTypes = PropTypes.shape({
-        _id: PropTypes.number.isRequired,
-        type: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-      });
-      BurgerConstructor.propTypes = {
-        data: burgerConstructorPropTypes,
-      }
   return (
     <>
       <div
@@ -40,18 +40,11 @@ export default function BurgerConstructor({ data }) {
             data.map((el, i) => (
               <ConstructorElement
                 extraClass={`${styles.draggable}`}
-                //   extraClass={
-                //     i !== 0 && i !== data.length - 1
-                //       ? `${styles.draggable}`
-                //       : `${styles.fixed}`
-                //   }
-                //   isLocked={i === 0 || i === data.length - 1}
                 key={el._id}
                 type={el.type}
                 text={el.name}
                 price={el.price}
                 thumbnail={el.image}
-                // draggable={i !== 0 || i !== data.length - 1}
               />
             ))}
         </div>

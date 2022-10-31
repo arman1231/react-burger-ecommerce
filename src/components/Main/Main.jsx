@@ -2,6 +2,11 @@ import React from "react";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import MainStyles from "./Main.module.css";
+import PropTypes from "prop-types";
+
+Main.propTypes = {
+  data: PropTypes.array.isRequired,
+}
 
 export default function Main({ data }) {
   return (
@@ -18,3 +23,4 @@ export default function Main({ data }) {
     </main>
   );
 }
+

@@ -5,30 +5,33 @@ import BurgerIngredientsStyles from "./BurgerIngredients.module.css";
 import PropTypes from "prop-types";
 
 const burgerIngredientsPropTypes = PropTypes.shape({
-  _id: PropTypes.number.isRequired,
+  _id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
 });
 BurgerIngredients.propTypes = {
-  data: burgerIngredientsPropTypes,
+  data: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
 };
 
 export default function BurgerIngredients({ data }) {
-  const [current, setCurrent] = React.useState("Булки");
+  const FIRST_TAB = 'Булки';
+  const SECOND_TAB = 'Соусы'
+  const THIRD_TAB  = 'Начинки'
+  const [current, setCurrent] = React.useState(FIRST_TAB);
   return (
     <>
       <div style={{ display: "flex" }}>
-        <Tab value="Булки" active={current === "Булки"} onClick={setCurrent}>
+        <Tab value={FIRST_TAB} active={current === FIRST_TAB} onClick={setCurrent}>
           Булки
         </Tab>
-        <Tab value="Соусы" active={current === "Соусы"} onClick={setCurrent}>
+        <Tab value={SECOND_TAB} active={current === SECOND_TAB} onClick={setCurrent}>
           Соусы
         </Tab>
         <Tab
-          value="Начинки"
-          active={current === "Начинки"}
+          value={THIRD_TAB}
+          active={current === THIRD_TAB}
           onClick={setCurrent}
         >
           Начинки
@@ -41,7 +44,7 @@ export default function BurgerIngredients({ data }) {
             {data
               .filter((el) => el.type === "bun")
               .map((el) => (
-                <BurgerIngridient {...el} />
+                <BurgerIngridient key={el._id} {...el} />
               ))}
           </ul>
         </div>
@@ -51,7 +54,7 @@ export default function BurgerIngredients({ data }) {
             {data
               .filter((el) => el.type === "sauce")
               .map((el) => (
-                <BurgerIngridient {...el} />
+                <BurgerIngridient key={el._id} {...el} />
               ))}
           </ul>
         </div>
@@ -61,7 +64,7 @@ export default function BurgerIngredients({ data }) {
             {data
               .filter((el) => el.type === "main")
               .map((el) => (
-                <BurgerIngridient {...el} />
+                <BurgerIngridient key={el._id} {...el} />
               ))}
           </ul>
         </div>

@@ -4,6 +4,13 @@ import {
     Counter,
     CurrencyIcon,
   } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
+
+BurgerIngridient.propTypes = {
+  image: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+}
 
 export default function BurgerIngridient({ image, price, name }) {
   return (
