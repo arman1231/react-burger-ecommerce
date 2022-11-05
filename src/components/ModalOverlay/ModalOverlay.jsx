@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
 import styles from "./ModalOverlay.module.css";
+import PropTypes from "prop-types";
+
+ModalOverlay.propTypes = {
+    handleCloseModal: PropTypes.func.isRequired,
+  };
 
 export default function ModalOverlay({ handleCloseModal }) {
   function closeOnOverlay(e) {

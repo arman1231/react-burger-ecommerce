@@ -1,7 +1,11 @@
 import React from "react";
 import Modal from "../Modal/Modal";
-import doneSvg from "../../images/graphics.svg";
-import styles from "./IngredientDetails.module.css"
+import styles from "./IngredientDetails.module.css";
+import PropTypes from "prop-types";
+
+IngredientDetails.propTypes = {
+    handleCloseModal: PropTypes.func.isRequired,
+  };
 
 export default function IngredientDetails({ handleCloseModal, ingridientData }) {
   return (

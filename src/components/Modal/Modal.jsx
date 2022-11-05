@@ -4,15 +4,18 @@ import { createPortal } from "react-dom";
 import styles from "./Modal.module.css";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
 
 const modalRoot = document.getElementById("react-modals");
-// const modalRoot = ReactDOM.createRoot(
-//     document.getElementById("react-modals") as HTMLElement
-//   );
 
-export default function Modal({ header, children, handleCloseModal}) {
+Modal.propTypes = {
+  children: PropTypes.element,
+  handleCloseModal: PropTypes.func.isRequired,
+};
+
+export default function Modal({ children, handleCloseModal }) {
   function handleClick() {
-    handleCloseModal()
+    handleCloseModal();
   }
   return createPortal(
     <>

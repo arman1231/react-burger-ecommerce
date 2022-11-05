@@ -1,7 +1,12 @@
 import React from "react";
 import Modal from "../Modal/Modal";
 import doneSvg from "../../images/graphics.svg";
-import styles from "./OrderDetails.module.css"
+import styles from "./OrderDetails.module.css";
+import PropTypes from "prop-types";
+
+OrderDetails.propTypes = {
+    handleCloseModal: PropTypes.func.isRequired,
+  };
 
 export default function OrderDetails({ handleCloseModal }) {
   return (

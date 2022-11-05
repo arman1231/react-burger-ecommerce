@@ -4,14 +4,13 @@ import Main from '../Main/Main';
 import appStyles from './App.module.css';
 import { URL_LIST_OF_INGRIDIENTS } from "../../utils/constants";
 import OrderDetails from '../OrderDetails/OrderDetails';
-import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
 function App() {
   const [data, setData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isIngridientDetailsOpen, setIsIngridientDetailsOpen] = useState(false);
-  const [ingridientData, setIngridientData] = useState({})
+  const [ingridientData, setIngridientData] = useState({});
   
   const fetchData = (url) => {
     fetch(url).then((res) => {
@@ -30,12 +29,6 @@ function App() {
   useEffect(() => {
     fetchData(URL_LIST_OF_INGRIDIENTS);
   }, []);
-
-  function handleEscClose(e) {
-    if (e.key === "Escape") {
-      handleCloseModal();
-    }
-  }
 
   function handleOpenModal() {
     setIsModalOpen(true);

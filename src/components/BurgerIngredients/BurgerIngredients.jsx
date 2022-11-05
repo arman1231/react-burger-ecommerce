@@ -13,6 +13,7 @@ const burgerIngredientsPropTypes = PropTypes.shape({
 });
 BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
+  handleOpenIngridientModal: PropTypes.func,
 };
 
 export default function BurgerIngredients({ data, handleOpenIngridientModal }) {

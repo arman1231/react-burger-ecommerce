@@ -6,6 +6,8 @@ import PropTypes from "prop-types";
 
 Main.propTypes = {
   data: PropTypes.array.isRequired,
+  handleOpenModal: PropTypes.func,
+  handleOpenIngridientModal: PropTypes.func,
 }
 
 export default function Main({ data, handleOpenModal, handleOpenIngridientModal }) {
