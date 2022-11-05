@@ -15,7 +15,7 @@ BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
 };
 
-export default function BurgerIngredients({ data }) {
+export default function BurgerIngredients({ data, handleOpenIngridientModal }) {
   const FIRST_TAB = 'Булки';
   const SECOND_TAB = 'Соусы'
   const THIRD_TAB  = 'Начинки'
@@ -44,7 +44,7 @@ export default function BurgerIngredients({ data }) {
             {data
               .filter((el) => el.type === "bun")
               .map((el) => (
-                <BurgerIngridient key={el._id} {...el} />
+                <BurgerIngridient key={el._id} {...el} handleOpenIngridientModal={handleOpenIngridientModal} />
               ))}
           </ul>
         </div>
@@ -54,7 +54,7 @@ export default function BurgerIngredients({ data }) {
             {data
               .filter((el) => el.type === "sauce")
               .map((el) => (
-                <BurgerIngridient key={el._id} {...el} />
+                <BurgerIngridient key={el._id} {...el} handleOpenIngridientModal={handleOpenIngridientModal} />
               ))}
           </ul>
         </div>
@@ -64,7 +64,7 @@ export default function BurgerIngredients({ data }) {
             {data
               .filter((el) => el.type === "main")
               .map((el) => (
-                <BurgerIngridient key={el._id} {...el} />
+                <BurgerIngridient key={el._id} {...el} handleOpenIngridientModal={handleOpenIngridientModal} />
               ))}
           </ul>
         </div>

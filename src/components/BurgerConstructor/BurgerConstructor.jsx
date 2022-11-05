@@ -20,7 +20,10 @@ BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
 };
 
-export default function BurgerConstructor({ data }) {
+export default function BurgerConstructor({ data, handleOpenModal }) {
+  function handleClick() {
+    handleOpenModal()
+  }
   return (
     <>
       <div
@@ -67,7 +70,7 @@ export default function BurgerConstructor({ data }) {
           <CurrencyIcon className="pr-2" type="primary" />
         </div>
 
-        <Button type="primary" size="large">
+        <Button onClick={handleClick} type="primary" size="large">
           Нажми на меня
         </Button>
       </section>
