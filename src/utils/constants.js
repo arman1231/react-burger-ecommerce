@@ -1,1 +1,1 @@
-export const URL_LIST_OF_INGRIDIENTS = 'https://norma.nomoreparties.space/api/ingredients';
+export const BASE_URL = 'https://norma.nomoreparties.space';

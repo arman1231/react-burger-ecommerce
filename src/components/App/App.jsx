@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AppHeader from '../AppHeader/AppHeader';
 import Main from '../Main/Main';
 import appStyles from './App.module.css';
-import { URL_LIST_OF_INGRIDIENTS } from "../../utils/constants";
+import { api } from '../../utils/api';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
@@ -12,22 +12,16 @@ function App() {
   const [isIngridientDetailsOpen, setIsIngridientDetailsOpen] = useState(false);
   const [ingridientData, setIngridientData] = useState({});
   
-  const fetchData = (url) => {
-    fetch(url).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      console.log(`Ошибка: ${res.status}`);
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }).then((data) => {
-      setData(data.data)
-    }).catch((err) => {
-      console.log(err);
-    })
+  const fetchIngridients = () => {
+    api.getIngridients().then((data) => {
+        setData(data.data)
+      }).catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
-    fetchData(URL_LIST_OF_INGRIDIENTS);
+    fetchIngridients();
   }, []);
 
   function handleOpenModal() {
