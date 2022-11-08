@@ -5,10 +5,10 @@ import appStyles from "./App.module.css";
 import { api } from "../../utils/api";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import { IngridientsContext } from "../../utils/appContext";
+import { IngridientsContext } from "../../context/appContext";
 
 function App() {
-  const [data, setData] = useState([]);
+  const [ingridients, setIngridients] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [orderDetailsData, setOrderDetailsData] = useState({});
   const [isIngridientDetailsOpen, setIsIngridientDetailsOpen] = useState(false);
@@ -18,7 +18,7 @@ function App() {
     api
       .getIngridients()
       .then((data) => {
-        setData(data.data);
+        setIngridients(data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -67,21 +67,25 @@ function App() {
 
   return (
     <div className={appStyles.page}>
-      <IngridientsContext.Provider value={data}>
-        <AppHeader />
+      <AppHeader />
+      <IngridientsContext.Provider value={ingridients}>
         <Main
-          data={data}
           handleOpenModal={handleOpenModal}
           handleOpenIngridientModal={handleOpenIngridientModal}
         />
-        {isModalOpen && <OrderDetails handleCloseModal={handleCloseModal} orderDetailsData={orderDetailsData} />}
-        {isIngridientDetailsOpen && (
-          <IngredientDetails
-            ingridientData={ingridientData}
-            handleCloseModal={handleCloseModal}
-          />
-        )}
       </IngridientsContext.Provider>
+      {isModalOpen && (
+        <OrderDetails
+          handleCloseModal={handleCloseModal}
+          orderDetailsData={orderDetailsData}
+        />
+      )}
+      {isIngridientDetailsOpen && (
+        <IngredientDetails
+          ingridientData={ingridientData}
+          handleCloseModal={handleCloseModal}
+        />
+      )}
     </div>
   );
 }

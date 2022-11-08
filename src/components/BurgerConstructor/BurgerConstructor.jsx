@@ -7,7 +7,7 @@ import {
 import styles from "./BurgerConstructor.module.css";
 import bun02 from "../../images/bun-02.svg";
 import PropTypes from 'prop-types';
-import { IngridientsContext } from "../../utils/appContext";
+import { IngridientsContext } from "../../context/appContext";
 
 
 const burgerIngredientsPropTypes = PropTypes.shape({
@@ -23,7 +23,6 @@ BurgerConstructor.propTypes = {
 };
 
 export default function BurgerConstructor({ handleOpenModal }) {
-
   const data = useContext(IngridientsContext)
   function handleClick() {
     const orderData = data.map(el => el._id);
@@ -83,7 +82,7 @@ export default function BurgerConstructor({ handleOpenModal }) {
           <CurrencyIcon className="pr-2" type="primary" />
         </div>
 
-        <Button onClick={handleClick} type="primary" size="large">
+        <Button onClick={handleClick} type="primary" size="large" htmlType='button'>
           Нажми на меня
         </Button>
       </section>
