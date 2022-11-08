@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Button,
   ConstructorElement,
@@ -7,6 +7,7 @@ import {
 import styles from "./BurgerConstructor.module.css";
 import bun02 from "../../images/bun-02.svg";
 import PropTypes from 'prop-types';
+import { IngridientsContext } from "../../utils/appContext";
 
 
 const burgerIngredientsPropTypes = PropTypes.shape({
@@ -21,9 +22,12 @@ BurgerConstructor.propTypes = {
   handleOpenModal: PropTypes.func
 };
 
-export default function BurgerConstructor({ data, handleOpenModal }) {
+export default function BurgerConstructor({ handleOpenModal }) {
+
+  const data = useContext(IngridientsContext)
   function handleClick() {
-    handleOpenModal()
+    const orderData = data.map(el => el._id);
+    handleOpenModal(orderData)
   }
   return (
     <>
@@ -31,17 +35,20 @@ export default function BurgerConstructor({ data, handleOpenModal }) {
         className={styles.burgerConstructor}
         style={{ display: "flex", flexDirection: "column", gap: "10px" }}
       >
-        <ConstructorElement
+        {data && data.filter(el => el.type === 'bun').map((el, i) => i === 0 && (
+          <ConstructorElement
+          key={el._id}
           extraClass="ml-6"
           type="top"
           isLocked={true}
-          text="Краторная булка N-200i (верх)"
-          price={20}
-          thumbnail={bun02}
+          text={`${el.name} (верх)`}
+          price={el.price}
+          thumbnail={el.image}
         />
+        ))}   
         <div className={styles.scrollable}>
           {data &&
-            data.map((el, i) => (
+            data.filter(el => el.type !== 'bun').map((el, i) => (
               <ConstructorElement
                 extraClass={`${styles.draggable}`}
                 key={el._id}
@@ -52,21 +59,26 @@ export default function BurgerConstructor({ data, handleOpenModal }) {
               />
             ))}
         </div>
-        <ConstructorElement
+        {data && data.filter(el => el.type === 'bun').map((el, i) => i === 0 && (
+          <ConstructorElement
+          key={el._id}
           extraClass="ml-6"
           type="bottom"
           isLocked={true}
-          text="Краторная булка N-200i (низ)"
-          price={200}
-          thumbnail={bun02}
+          text={`${el.name} (низ)`}
+          price={el.price}
+          thumbnail={el.image}
         />
+        ))}   
       </div>
       <section className={`${styles.total} mt-10 mr-4`}>
         <div className={`${styles.priceWrap} mr-10`}>
           <span
             className={`${styles.price} text text_type_digits-medium`}
           >
-            610
+            {data && data.reduce((acc, prev) => {
+              return (acc + prev.price);
+            }, 0)}
           </span>
           <CurrencyIcon className="pr-2" type="primary" />
         </div>
