@@ -10,11 +10,19 @@ BurgerIngridient.propTypes = {
   image: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
+  calories: PropTypes.number.isRequired,
+  proteins: PropTypes.number.isRequired,
+  fat: PropTypes.number.isRequired,
+  carbohydrates: PropTypes.number.isRequired,
+  image_large: PropTypes.string.isRequired
 }
 
-export default function BurgerIngridient({ image, price, name }) {
+export default function BurgerIngridient({ image, price, name, calories, proteins, fat, carbohydrates, image_large, handleOpenIngridientModal }) {
+  function handleClick() {
+    handleOpenIngridientModal(calories, proteins, fat, carbohydrates, name, image_large)
+  }
   return (
-    <li className={BurgerIngredientStyles.item}>
+    <li className={BurgerIngredientStyles.item} onClick={handleClick}>
     <img
       className={BurgerIngredientStyles.image}
       src={image}

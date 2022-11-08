@@ -1,0 +1,16 @@
+.ingredientDetails {
+    text-align: center;
+    width: 720px;
+}
+.foodFacts {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap: 20px;
+    padding: 0;
+}
+
+.foodFactsItem {
+    display: flex;
+    flex-direction: column;
+}
