@@ -1,8 +1,9 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
+import React, { useContext } from "react";
 import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
 import BurgerIngredientsStyles from "./BurgerIngredients.module.css";
 import PropTypes from "prop-types";
+import { IngridientsContext } from "../../context/appContext";
 
 const burgerIngredientsPropTypes = PropTypes.shape({
   _id: PropTypes.string.isRequired,
@@ -16,7 +17,8 @@ BurgerIngredients.propTypes = {
   handleOpenIngridientModal: PropTypes.func,
 };
 
-export default function BurgerIngredients({ data, handleOpenIngridientModal }) {
+export default function BurgerIngredients({ handleOpenIngridientModal }) {
+  const data = useContext(IngridientsContext)
   const FIRST_TAB = 'Булки';
   const SECOND_TAB = 'Соусы'
   const THIRD_TAB  = 'Начинки'
