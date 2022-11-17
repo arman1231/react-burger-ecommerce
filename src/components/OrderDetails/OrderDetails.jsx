@@ -3,13 +3,15 @@ import Modal from "../Modal/Modal";
 import doneSvg from "../../images/graphics.svg";
 import styles from "./OrderDetails.module.css";
 import PropTypes from "prop-types";
+import { useSelector } from 'react-redux';
 
 OrderDetails.propTypes = {
     handleCloseModal: PropTypes.func.isRequired,
     orderDetailsData: PropTypes.object.isRequired,
   };
 
-export default function OrderDetails({ handleCloseModal, orderDetailsData }) {
+export default function OrderDetails({ handleCloseModal }) {
+  const orderDetailsData = useSelector(state => state.cart.orderDetailsData)
   return (
     <Modal handleCloseModal={handleCloseModal}>
       <div className={styles.orderDetails}>
