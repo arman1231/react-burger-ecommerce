@@ -10,10 +10,11 @@ import { useDrop, useDrag } from "react-dnd";
 import {
   ADD_ITEM_TO_CONSTRUCTOR,
   REMOVE_ITEM_FROM_CONSTRUCTOR,
+  MOVE_ITEM_IN_CONSTRUCTOR
 } from "../../services/actions/cart";
 import { v4 as uuidv4 } from "uuid";
 import graphics from "../../images/graphics.svg";
-import { useRef } from "react";
+import ConstructorElementWrapper from "../ConstructorElementWrapper/ConstructorElementWrapper";
 
 const burgerIngredientsPropTypes = PropTypes.shape({
   _id: PropTypes.string.isRequired,
@@ -38,14 +39,6 @@ export default function BurgerConstructor({ handleOpenModal }) {
     };
     handleOpenModal(collectOrderData());
   }
-  const itemRef = useRef();
-  const [{ isDragging }, drag] = useDrag({
-    type: "bun",
-    // item: itemRef,
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
   const [{ isHover }, dropBun] = useDrop({
     accept: "bun",
     drop(item) {
@@ -64,6 +57,13 @@ export default function BurgerConstructor({ handleOpenModal }) {
       id: id,
     });
   }
+  const moveCard = (dragIndex, hoverIndex) => {
+    dispatch({
+      type: MOVE_ITEM_IN_CONSTRUCTOR,
+      dragIndex,
+      hoverIndex
+    })
+  }
   return (
     <>
       <div
@@ -73,7 +73,6 @@ export default function BurgerConstructor({ handleOpenModal }) {
           display: "flex",
           flexDirection: "column",
           gap: "10px",
-          minHeight: "200px",
         }}
       >
         {data.bun.length ? (
@@ -94,9 +93,12 @@ export default function BurgerConstructor({ handleOpenModal }) {
                   )
               )}
             <div className={styles.scrollable}>
-              {data &&
-                data.ingredients.map((el, i) => (
-                  <div ref={itemRef}>
+            {data &&
+                data.ingredients.map((el, i) => (      
+                  <ConstructorElementWrapper {...el} index={i} handleDeleteElement={handleDeleteElement} moveCard={moveCard} key={uuidv4()} />          
+                ))}
+              {/* {data &&
+                data.ingredients.map((el, i) => (                 
                     <ConstructorElement
                       extraClass={`${styles.draggable}`}
                       key={el.id}
@@ -106,8 +108,7 @@ export default function BurgerConstructor({ handleOpenModal }) {
                       thumbnail={el.image}
                       handleClose={() => handleDeleteElement(el.id)}
                     />
-                  </div>
-                ))}
+                ))} */}
             </div>
             {data &&
               data.bun.map(
