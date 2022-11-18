@@ -22,7 +22,7 @@ BurgerIngredients.propTypes = {
 
 export default function BurgerIngredients({ handleOpenIngridientModal }) {
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.cart.burgerIngredients);
+  const data = useSelector((state) => state.burgerIngredients.burgerIngredients);
   const FIRST_TAB = "Булки";
   const SECOND_TAB = "Соусы";
   const THIRD_TAB = "Начинки";

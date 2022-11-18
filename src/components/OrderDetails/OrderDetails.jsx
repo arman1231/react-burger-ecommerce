@@ -11,7 +11,7 @@ OrderDetails.propTypes = {
   };
 
 export default function OrderDetails({ handleCloseModal }) {
-  const orderDetailsData = useSelector(state => state.cart.orderDetailsData)
+  const orderDetailsData = useSelector(state => state.orderDetails.orderDetailsData)
   return (
     <Modal handleCloseModal={handleCloseModal}>
       <div className={styles.orderDetails}>

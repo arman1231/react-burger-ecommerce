@@ -5,19 +5,17 @@ import appStyles from "./App.module.css";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { api } from "../../utils/api";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   CLEAR_MODAL_INGRIDIENT_DATA,
   ADD_MODAL_ORDER_DETAILS_DATA,
-  CLEAR_MODAL_ORDER_DETAILS_DATA,
+  CLEAR_CONSTRUCTOR
 } from "../../services/actions/cart";
 
 function App() {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [orderDetailsData, setOrderDetailsData] = useState({});
   const [isIngridientDetailsOpen, setIsIngridientDetailsOpen] = useState(false);
-  const [ingridientData, setIngridientData] = useState({});
 
   function handleOpenModal(data) {
     api
@@ -27,10 +25,14 @@ function App() {
           type: ADD_MODAL_ORDER_DETAILS_DATA,
           payload: data,
         });
-        // setOrderDetailsData(data);
       })
       .then(() => {
         setIsModalOpen(true);
+      })
+      .then(() => {
+        dispatch({
+          type: CLEAR_CONSTRUCTOR
+        })
       })
       .catch((err) => console.log(err));
   }
@@ -57,12 +59,10 @@ function App() {
       {isModalOpen && (
         <OrderDetails
           handleCloseModal={handleCloseModal}
-          orderDetailsData={orderDetailsData}
         />
       )}
       {isIngridientDetailsOpen && (
         <IngredientDetails
-          ingridientData={ingridientData}
           handleCloseModal={handleCloseModal}
         />
       )}

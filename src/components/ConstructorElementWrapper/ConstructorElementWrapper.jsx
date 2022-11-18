@@ -16,7 +16,7 @@ export default function ConstructorElementWrapper({
 }) {
   const ref = useRef(null);
   const [{ handlerId }, drop] = useDrop({
-    accept: 'bun',
+    accept: 'ing',
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
@@ -62,7 +62,7 @@ export default function ConstructorElementWrapper({
     },
   })
   const [{ isDragging }, drag] = useDrag({
-    type: "bun",
+    type: "ing",
     item: () => {
       return { _id, index };
     },
@@ -73,7 +73,7 @@ export default function ConstructorElementWrapper({
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
   return (
-    <div ref={ref} data-handler-id={handlerId} style={{opacity}}>
+    <div ref={ref} data-handler-id={handlerId} style={{opacity, cursor: 'pointer'}}>
       <ConstructorElement
         extraClass={`${styles.draggable}`}
         type={type}

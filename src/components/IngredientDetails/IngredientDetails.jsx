@@ -9,7 +9,7 @@ IngredientDetails.propTypes = {
   };
 
 export default function IngredientDetails({ handleCloseModal}) {
-  const ingridientData = useSelector(state => state.cart.modalIngridientData)
+  const ingridientData = useSelector(state => state.ingredientDetails.modalIngridientData);
   return (
     <Modal handleCloseModal={handleCloseModal}>
       <div className={styles.ingredientDetails}>
