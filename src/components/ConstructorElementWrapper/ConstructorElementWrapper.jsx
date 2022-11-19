@@ -73,7 +73,7 @@ export default function ConstructorElementWrapper({
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
   return (
-    <div ref={ref} data-handler-id={handlerId} style={{opacity, cursor: 'pointer'}}>
+    <div ref={ref} data-handler-id={handlerId} className={styles.constructorElementWrapper} style={{opacity}}>
       <ConstructorElement
         extraClass={`${styles.draggable}`}
         type={type}

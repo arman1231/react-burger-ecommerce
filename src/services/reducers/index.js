@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { GET_BURGER_INGRIDIENTS_PENDING, GET_BURGER_INGRIDIENTS_FULFILED, GET_BURGER_INGRIDIENTS_FAILED, ADD_MODAL_INGRIDIENT_DATA, CLEAR_MODAL_INGRIDIENT_DATA, ADD_MODAL_ORDER_DETAILS_DATA, CLEAR_MODAL_ORDER_DETAILS_DATA, ADD_ITEM_TO_CONSTRUCTOR, REMOVE_ITEM_FROM_CONSTRUCTOR, MOVE_ITEM_IN_CONSTRUCTOR, CLEAR_CONSTRUCTOR } from '../actions/cart'
+import { GET_BURGER_INGRIDIENTS_PENDING, GET_BURGER_INGRIDIENTS_FULFILED, GET_BURGER_INGRIDIENTS_FAILED, ADD_MODAL_INGRIDIENT_DATA, CLEAR_MODAL_INGRIDIENT_DATA, CLEAR_MODAL_ORDER_DETAILS_DATA, ADD_ITEM_TO_CONSTRUCTOR, REMOVE_ITEM_FROM_CONSTRUCTOR, MOVE_ITEM_IN_CONSTRUCTOR, CLEAR_CONSTRUCTOR, MAKE_ORDER_FULFILED, MAKE_ORDER_PENDING, MAKE_ORDER_FAILED } from '../actions/cart'
 const initialState = {
     burgerConstructor: {
         bun: [],
@@ -15,14 +15,30 @@ const ingredientDetailsInitialState = {
     modalIngridientData: {}
 }
 const orderDetailsInitialState = {
-    orderDetailsData: {}
+    orderDetailsData: {},
+    orderDetailsDataPending: false,
+    orderDetailsDataFailed: false,
 }
 const orderDetailsReducer = (state = orderDetailsInitialState, action) => {
 switch (action.type) {
-    case ADD_MODAL_ORDER_DETAILS_DATA: {
+    case MAKE_ORDER_PENDING: {
+        return {
+            ...state,
+            orderDetailsDataPending: true,
+        }
+    }
+    case MAKE_ORDER_FULFILED: {
         return {
             ...state,
             orderDetailsData: action.payload,
+            orderDetailsDataPending: false
+        }
+    }
+    case MAKE_ORDER_FAILED: {
+        return {
+            ...state,
+            orderDetailsDataPending: false,
+            orderDetailsDataFailed: true,
         }
     }
     case CLEAR_MODAL_ORDER_DETAILS_DATA: {
@@ -130,8 +146,8 @@ const cartReducer = (state = initialState, action) => {
 };
 
 export const rootReducer = combineReducers({
-    orderDetails: orderDetailsReducer,
     ingredientDetails: ingredientDetailsReducer,
     burgerIngredients: burgerIngredientsReducer,
     cart: cartReducer,
+    orderDetails: orderDetailsReducer,
 });

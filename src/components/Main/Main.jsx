@@ -6,7 +6,6 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 Main.propTypes = {
-  data: PropTypes.array.isRequired,
   handleOpenModal: PropTypes.func,
   handleOpenIngridientModal: PropTypes.func,
 }

@@ -16,13 +16,13 @@ const burgerIngredientsPropTypes = PropTypes.shape({
   image: PropTypes.string.isRequired,
 });
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
   handleOpenIngridientModal: PropTypes.func,
 };
 
 export default function BurgerIngredients({ handleOpenIngridientModal }) {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.burgerIngredients.burgerIngredients);
+  console.log(data);
   const FIRST_TAB = "Булки";
   const SECOND_TAB = "Соусы";
   const THIRD_TAB = "Начинки";
@@ -41,10 +41,10 @@ export default function BurgerIngredients({ handleOpenIngridientModal }) {
     threshold: 0.8,
   })
   const [ref3, inView3 ] = useInView({root: rootScroll.current,
-    threshold: 0.5,})
+    threshold: 0.3,})
   return (
     <>
-      <div style={{ display: "flex" }}>
+      <div className={BurgerIngredientsStyles.tabControls}>
         <Tab
           value={FIRST_TAB}
           active={inView}

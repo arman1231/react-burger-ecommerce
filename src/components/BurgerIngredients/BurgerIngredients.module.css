@@ -25,6 +25,9 @@
   gap: 32px 24px;
 }
 
+.tabControls {
+  display: flex;
+}
 /* .image {
   width: 240px;
   height: 120px;

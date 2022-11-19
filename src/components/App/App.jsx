@@ -5,37 +5,28 @@ import appStyles from "./App.module.css";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { api } from "../../utils/api";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   CLEAR_MODAL_INGRIDIENT_DATA,
-  ADD_MODAL_ORDER_DETAILS_DATA,
-  CLEAR_CONSTRUCTOR
+  MAKE_ORDER_FAILED,
+  CLEAR_CONSTRUCTOR,
+  makeOrderAction
 } from "../../services/actions/cart";
 
 function App() {
   const dispatch = useDispatch();
+  const isMakeOrderData = useSelector(state => state.orderDetails.orderDetailsData);
+  console.log(isMakeOrderData);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isIngridientDetailsOpen, setIsIngridientDetailsOpen] = useState(false);
 
   function handleOpenModal(data) {
-    api
-      .makeOrder(data)
-      .then((data) => {
-        dispatch({
-          type: ADD_MODAL_ORDER_DETAILS_DATA,
-          payload: data,
-        });
-      })
-      .then(() => {
-        setIsModalOpen(true);
-      })
-      .then(() => {
-        dispatch({
-          type: CLEAR_CONSTRUCTOR
-        })
-      })
-      .catch((err) => console.log(err));
+    dispatch(makeOrderAction(data))
+    // setIsModalOpen(true);
   }
+  // useEffect(() => {
+  //   isMakeOrderData && setIsModalOpen(true)
+  // }, [])
 
   function handleCloseModal() {
     setIsModalOpen(false);
@@ -43,6 +34,9 @@ function App() {
     dispatch({
       type: CLEAR_MODAL_INGRIDIENT_DATA,
     });
+    dispatch({
+      type: CLEAR_CONSTRUCTOR
+    })
   }
 
   function handleOpenIngridientModal() {
@@ -56,7 +50,7 @@ function App() {
         handleOpenModal={handleOpenModal}
         handleOpenIngridientModal={handleOpenIngridientModal}
       />
-      {isModalOpen && (
+      {isMakeOrderData && (
         <OrderDetails
           handleCloseModal={handleCloseModal}
         />

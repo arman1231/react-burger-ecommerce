@@ -16,21 +16,15 @@ import { v4 as uuidv4 } from "uuid";
 import graphics from "../../images/graphics.svg";
 import ConstructorElementWrapper from "../ConstructorElementWrapper/ConstructorElementWrapper";
 
-const burgerIngredientsPropTypes = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-});
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
+  // data: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
   handleOpenModal: PropTypes.func,
 };
 
 export default function BurgerConstructor({ handleOpenModal }) {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.cart.burgerConstructor);
+  const isDisabled = data.bun.length ? false : true;
   function handleClick() {
     const collectOrderData = () => {
       const bunIds = data.bun.map((el) => el._id);
@@ -69,11 +63,6 @@ export default function BurgerConstructor({ handleOpenModal }) {
       <div
         ref={dropBun}
         className={styles.burgerConstructor}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-        }}
       >
         {data.bun.length ? (
           <>
@@ -95,20 +84,8 @@ export default function BurgerConstructor({ handleOpenModal }) {
             <div className={styles.scrollable}>
             {data &&
                 data.ingredients.map((el, i) => (      
-                  <ConstructorElementWrapper {...el} index={i} handleDeleteElement={handleDeleteElement} moveCard={moveCard} key={uuidv4()} />          
+                  <ConstructorElementWrapper {...el} index={i} handleDeleteElement={handleDeleteElement} moveCard={moveCard} key={el.id} />          
                 ))}
-              {/* {data &&
-                data.ingredients.map((el, i) => (                 
-                    <ConstructorElement
-                      extraClass={`${styles.draggable}`}
-                      key={el.id}
-                      type={el.type}
-                      text={el.name}
-                      price={el.price}
-                      thumbnail={el.image}
-                      handleClose={() => handleDeleteElement(el.id)}
-                    />
-                ))} */}
             </div>
             {data &&
               data.bun.map(
@@ -133,15 +110,12 @@ export default function BurgerConstructor({ handleOpenModal }) {
               type="top"
               isLocked={true}
               text={`сначала выберите булочку`}
-              // price={100}
               thumbnail={graphics}
             />
             <ConstructorElement
               extraClass="ml-6"
-              // type="top"
               isLocked={true}
               text={`перетащите ингридиент`}
-              // price={100}
               thumbnail={graphics}
             />
             <ConstructorElement
@@ -149,7 +123,6 @@ export default function BurgerConstructor({ handleOpenModal }) {
               type="bottom"
               isLocked={true}
               text={`сначала выберите булочку`}
-              // price={100}
               thumbnail={graphics}
             />
           </>
@@ -174,6 +147,7 @@ export default function BurgerConstructor({ handleOpenModal }) {
           type="primary"
           size="large"
           htmlType="button"
+          disabled={isDisabled}
         >
           Нажми на меня
         </Button>
