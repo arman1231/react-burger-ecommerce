@@ -10,9 +10,9 @@ export const ADD_ITEM_TO_CONSTRUCTOR = 'ADD_ITEM_TO_CONSTRUCTOR';
 export const REMOVE_ITEM_FROM_CONSTRUCTOR = 'REMOVE_ITEM_FROM_CONSTRUCTOR';
 export const MOVE_ITEM_IN_CONSTRUCTOR = 'MOVE_ITEM_IN_CONSTRUCTOR';
 export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';
-export const MAKE_ORDER_PENDING = 'GET_BURGER_INGRIDIENTS_PENDING';
-export const MAKE_ORDER_FULFILED = 'GET_BURGER_INGRIDIENTS_FULFILED';
-export const MAKE_ORDER_FAILED = 'GET_BURGER_INGRIDIENTS_FAILED';
+export const MAKE_ORDER_PENDING = 'MAKE_ORDER_PENDING';
+export const MAKE_ORDER_FULFILED = 'MAKE_ORDER_FULFILED';
+export const MAKE_ORDER_FAILED = 'MAKE_ORDER_FAILED ';
 
 
 export const fetchIngridients = () => {
@@ -42,7 +42,6 @@ export const fetchIngridients = () => {
       api
       .makeOrder(data)
       .then((res) => {
-        console.log(res);
         dispatch({
           type: MAKE_ORDER_FULFILED,
           payload: res,

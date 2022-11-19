@@ -12,10 +12,10 @@ const burgerIngredientsInitialState = {
     burgerIngredientsFailed: false,
 }
 const ingredientDetailsInitialState = {
-    modalIngridientData: {}
+    modalIngridientData: null
 }
 const orderDetailsInitialState = {
-    orderDetailsData: {},
+    orderDetailsData: null,
     orderDetailsDataPending: false,
     orderDetailsDataFailed: false,
 }

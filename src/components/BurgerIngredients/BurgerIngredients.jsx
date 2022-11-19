@@ -1,36 +1,18 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef} from "react";
 import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
 import BurgerIngredientsStyles from "./BurgerIngredients.module.css";
-import PropTypes from "prop-types";
-import { api } from "../../utils/api";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchIngridients } from "../../services/actions/cart";
+import { useSelector } from "react-redux";
 import { useInView } from 'react-intersection-observer';
 
-const burgerIngredientsPropTypes = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-});
-BurgerIngredients.propTypes = {
-  handleOpenIngridientModal: PropTypes.func,
-};
+export default function BurgerIngredients() {
 
-export default function BurgerIngredients({ handleOpenIngridientModal }) {
-  const dispatch = useDispatch();
   const data = useSelector((state) => state.burgerIngredients.burgerIngredients);
-  console.log(data);
   const FIRST_TAB = "Булки";
   const SECOND_TAB = "Соусы";
   const THIRD_TAB = "Начинки";
   const rootScroll = useRef();
 
-  useEffect(() => {
-    dispatch(fetchIngridients());
-  }, [dispatch]);
   const [ref, inView ] = useInView({
     root: rootScroll.current,
     threshold: 0.1,
@@ -75,7 +57,6 @@ export default function BurgerIngredients({ handleOpenIngridientModal }) {
                   key={el._id}
                   el={el}
                   {...el}
-                  handleOpenIngridientModal={handleOpenIngridientModal}
                 />
               ))}
           </ul>
@@ -90,7 +71,6 @@ export default function BurgerIngredients({ handleOpenIngridientModal }) {
                   key={el._id}
                   el={el}
                   {...el}
-                  handleOpenIngridientModal={handleOpenIngridientModal}
                 />
               ))}
           </ul>
@@ -105,7 +85,6 @@ export default function BurgerIngredients({ handleOpenIngridientModal }) {
                   key={el._id}
                   el={el}
                   {...el}
-                  handleOpenIngridientModal={handleOpenIngridientModal}
                 />
               ))}
           </ul>

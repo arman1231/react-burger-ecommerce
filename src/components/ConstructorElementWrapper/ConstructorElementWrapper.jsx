@@ -2,6 +2,19 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 import React, { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import styles from "./ConstructorElementWrapper.module.css";
+import PropTypes from "prop-types";
+
+ConstructorElementWrapper.propTypes = {
+  _id: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+  handleDeleteElement: PropTypes.func.isRequired,
+  moveCard: PropTypes.func.isRequired,  
+};
 
 export default function ConstructorElementWrapper({
   _id,

@@ -4,41 +4,51 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerConstructor.module.css";
-import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop, useDrag } from "react-dnd";
 import {
   ADD_ITEM_TO_CONSTRUCTOR,
   REMOVE_ITEM_FROM_CONSTRUCTOR,
-  MOVE_ITEM_IN_CONSTRUCTOR
+  MOVE_ITEM_IN_CONSTRUCTOR,
+  makeOrderAction,
+  CLEAR_MODAL_ORDER_DETAILS_DATA,
+  CLEAR_CONSTRUCTOR,
 } from "../../services/actions/cart";
 import { v4 as uuidv4 } from "uuid";
 import graphics from "../../images/graphics.svg";
 import ConstructorElementWrapper from "../ConstructorElementWrapper/ConstructorElementWrapper";
+import OrderDetails from "../OrderDetails/OrderDetails";
+import Modal from "../Modal/Modal";
 
-BurgerConstructor.propTypes = {
-  // data: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
-  handleOpenModal: PropTypes.func,
-};
-
-export default function BurgerConstructor({ handleOpenModal }) {
+export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.cart.burgerConstructor);
   const isDisabled = data.bun.length ? false : true;
+  const isMakeOrderData = useSelector(
+    (state) => state.orderDetails.orderDetailsData
+  );
+  const isMakeOrdredPending = useSelector(
+    (state) => state.orderDetails.orderDetailsDataPending
+  );
+  const closeOrder = () => {
+    dispatch({ type: CLEAR_MODAL_ORDER_DETAILS_DATA });
+    dispatch({
+      type: CLEAR_CONSTRUCTOR,
+    });
+  };
+
   function handleClick() {
-    const collectOrderData = () => {
-      const bunIds = data.bun.map((el) => el._id);
-      const ingridientIds = data.ingredients.map((el) => el._id);
-      return [...bunIds, ...ingridientIds]
-    };
-    handleOpenModal(collectOrderData());
+    const bunIds = data.bun.map((el) => el._id);
+    const ingridientIds = data.ingredients.map((el) => el._id);
+
+    dispatch(makeOrderAction([...bunIds, ...ingridientIds]));
   }
   const [{ isHover }, dropBun] = useDrop({
     accept: "bun",
     drop(item) {
       dispatch({
         type: ADD_ITEM_TO_CONSTRUCTOR,
-        payload: { ...item, id: uuidv4(), },
+        payload: { ...item, id: uuidv4() },
       });
     },
     collect: (monitor) => ({
@@ -55,15 +65,12 @@ export default function BurgerConstructor({ handleOpenModal }) {
     dispatch({
       type: MOVE_ITEM_IN_CONSTRUCTOR,
       dragIndex,
-      hoverIndex
-    })
-  }
+      hoverIndex,
+    });
+  };
   return (
     <>
-      <div
-        ref={dropBun}
-        className={styles.burgerConstructor}
-      >
+      <div ref={dropBun} className={styles.burgerConstructor}>
         {data.bun.length ? (
           <>
             {data &&
@@ -82,9 +89,15 @@ export default function BurgerConstructor({ handleOpenModal }) {
                   )
               )}
             <div className={styles.scrollable}>
-            {data &&
-                data.ingredients.map((el, i) => (      
-                  <ConstructorElementWrapper {...el} index={i} handleDeleteElement={handleDeleteElement} moveCard={moveCard} key={el.id} />          
+              {data &&
+                data.ingredients.map((el, i) => (
+                  <ConstructorElementWrapper
+                    {...el}
+                    index={i}
+                    handleDeleteElement={handleDeleteElement}
+                    moveCard={moveCard}
+                    key={el.id}
+                  />
                 ))}
             </div>
             {data &&
@@ -151,6 +164,8 @@ export default function BurgerConstructor({ handleOpenModal }) {
         >
           Нажми на меня
         </Button>
+        {isMakeOrdredPending ? <Modal><h1 className="text text_type_main-large p-15">Наши системы регистрируют ваш заказ, ожидайте...</h1></Modal> : ''}
+        {isMakeOrderData && <OrderDetails handleCloseModal={closeOrder} />}
       </section>
     </>
   );
