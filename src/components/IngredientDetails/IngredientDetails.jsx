@@ -1,17 +1,9 @@
-import React from "react";
-import Modal from "../Modal/Modal";
 import styles from "./IngredientDetails.module.css";
-import PropTypes from "prop-types";
 import { useSelector } from 'react-redux';
 
-IngredientDetails.propTypes = {
-    handleCloseModal: PropTypes.func.isRequired,
-  };
-
-export default function IngredientDetails({ handleCloseModal}) {
+export default function IngredientDetails() {
   const ingridientData = useSelector(state => state.ingredientDetails.modalIngridientData);
   return (
-    <Modal handleCloseModal={handleCloseModal}>
       <div className={styles.ingredientDetails}>
         <p className="text text_type_main-large pt-10">Детали ингредиента</p>
         <img src={ingridientData && ingridientData.image_large} alt={ingridientData && ingridientData.name} />
@@ -23,6 +15,5 @@ export default function IngredientDetails({ handleCloseModal}) {
             <li className={styles.foodFactsItem}><span className="text text_type_main-medium text_color_inactive">Углеводы, г</span><span className="text text_type_digits-medium text_color_inactive">{ingridientData && ingridientData.carbohydrates}</span></li>
         </ul>
       </div>
-    </Modal>
   );
 }

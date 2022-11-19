@@ -12,6 +12,7 @@ import {
 import { useDrag } from "react-dnd";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { ingredientType } from '../../utils/types'
+import Modal from "../Modal/Modal";
 
 
 BurgerIngridient.propTypes = {
@@ -82,7 +83,7 @@ export default function BurgerIngridient({
         <h3 className="text text_type_main-default mb-6">{name}</h3>
       </li>
       {isModalIngridientData && (
-        <IngredientDetails handleCloseModal={handleClose} />
+        <Modal handleCloseModal={handleClose}><IngredientDetails /></Modal>
       )}
     </>
   );

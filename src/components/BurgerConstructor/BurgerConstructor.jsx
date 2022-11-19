@@ -165,7 +165,7 @@ export default function BurgerConstructor() {
           Нажми на меня
         </Button>
         {isMakeOrdredPending ? <Modal><h1 className="text text_type_main-large p-15">Наши системы регистрируют ваш заказ, ожидайте...</h1></Modal> : ''}
-        {isMakeOrderData && <OrderDetails handleCloseModal={closeOrder} />}
+        {isMakeOrderData && <Modal handleCloseModal={closeOrder}><OrderDetails /></Modal>}
       </section>
     </>
   );

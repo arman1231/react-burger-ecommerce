@@ -3,7 +3,7 @@ import styles from "./ModalOverlay.module.css";
 import PropTypes from "prop-types";
 
 ModalOverlay.propTypes = {
-    handleCloseModal: PropTypes.func.isRequired,
+    handleCloseModal: PropTypes.func,
   };
 
 export default function ModalOverlay({ handleCloseModal }) {
