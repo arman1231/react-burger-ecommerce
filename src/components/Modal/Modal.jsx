@@ -1,5 +1,3 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
 import { createPortal } from "react-dom";
 import styles from "./Modal.module.css";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
@@ -10,7 +8,7 @@ const modalRoot = document.getElementById("react-modals");
 
 Modal.propTypes = {
   children: PropTypes.element,
-  handleCloseModal: PropTypes.func.isRequired,
+  handleCloseModal: PropTypes.func,
 };
 
 export default function Modal({ children, handleCloseModal }) {

@@ -1,6 +1,7 @@
 .burgerConstructor {
-  /* max-height: 80vh;
-    overflow-y: scroll; */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .scrollable {
@@ -29,7 +30,7 @@
 .draggable::after {
   content: "";
   position: absolute;
-    cursor: pointer;
+  cursor: pointer;
   background-image: url(../../images/drag.svg);
   width: 13px;
   height: 18px;
@@ -43,12 +44,11 @@
 }
 
 .total {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .price {
-    margin-right: 9.5px;
+  margin-right: 9.5px;
 }

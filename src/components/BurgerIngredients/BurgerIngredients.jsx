@@ -1,73 +1,91 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useContext } from "react";
+import React, { useRef} from "react";
 import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
 import BurgerIngredientsStyles from "./BurgerIngredients.module.css";
-import PropTypes from "prop-types";
-import { IngridientsContext } from "../../context/appContext";
+import { useSelector } from "react-redux";
+import { useInView } from 'react-intersection-observer';
 
-const burgerIngredientsPropTypes = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-});
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
-  handleOpenIngridientModal: PropTypes.func,
-};
+export default function BurgerIngredients() {
 
-export default function BurgerIngredients({ handleOpenIngridientModal }) {
-  const data = useContext(IngridientsContext)
-  const FIRST_TAB = 'Булки';
-  const SECOND_TAB = 'Соусы'
-  const THIRD_TAB  = 'Начинки'
-  const [current, setCurrent] = React.useState(FIRST_TAB);
+  const data = useSelector((state) => state.burgerIngredients.burgerIngredients);
+  const FIRST_TAB = "Булки";
+  const SECOND_TAB = "Соусы";
+  const THIRD_TAB = "Начинки";
+  const rootScroll = useRef();
+
+  const [ref, inView ] = useInView({
+    root: rootScroll.current,
+    threshold: 0.1,
+  })
+  const [ref2, inView2 ] = useInView({
+    root: rootScroll.current,
+    // rootMargin: '100px',
+    threshold: 0.8,
+  })
+  const [ref3, inView3 ] = useInView({root: rootScroll.current,
+    threshold: 0.3,})
   return (
     <>
-      <div style={{ display: "flex" }}>
-        <Tab value={FIRST_TAB} active={current === FIRST_TAB} onClick={setCurrent}>
+      <div className={BurgerIngredientsStyles.tabControls}>
+        <Tab
+          value={FIRST_TAB}
+          active={inView}
+        >
           Булки
         </Tab>
-        <Tab value={SECOND_TAB} active={current === SECOND_TAB} onClick={setCurrent}>
+        <Tab
+          value={SECOND_TAB}
+          active={inView2}
+        >
           Соусы
         </Tab>
         <Tab
           value={THIRD_TAB}
-          active={current === THIRD_TAB}
-          onClick={setCurrent}
+          active={inView3}
         >
           Начинки
         </Tab>
       </div>
-      <div className={BurgerIngredientsStyles.tabList}>
-        <div className={BurgerIngredientsStyles.tab}>
+      <div ref={rootScroll} className={BurgerIngredientsStyles.tabList}>
+        <div ref={ref} className={BurgerIngredientsStyles.tab}>
           <h2 className="text text_type_main-medium pt-10 pb-6">Булки</h2>
           <ul className={BurgerIngredientsStyles.list}>
             {data
               .filter((el) => el.type === "bun")
               .map((el) => (
-                <BurgerIngridient key={el._id} {...el} handleOpenIngridientModal={handleOpenIngridientModal} />
+                <BurgerIngridient
+                  key={el._id}
+                  el={el}
+                  {...el}
+                />
               ))}
           </ul>
         </div>
-        <div className={BurgerIngredientsStyles.tab}>
+        <div ref={ref2} className={BurgerIngredientsStyles.tab}>
           <h2 className="text text_type_main-medium pt-10 pb-6">Соусы</h2>
           <ul className={BurgerIngredientsStyles.list}>
             {data
               .filter((el) => el.type === "sauce")
               .map((el) => (
-                <BurgerIngridient key={el._id} {...el} handleOpenIngridientModal={handleOpenIngridientModal} />
+                <BurgerIngridient
+                  key={el._id}
+                  el={el}
+                  {...el}
+                />
               ))}
           </ul>
         </div>
-        <div className={BurgerIngredientsStyles.tab}>
+        <div ref={ref3} className={BurgerIngredientsStyles.tab}>
           <h2 className="text text_type_main-medium pt-10 pb-6">Начинки</h2>
           <ul className={BurgerIngredientsStyles.list}>
             {data
               .filter((el) => el.type === "main")
               .map((el) => (
-                <BurgerIngridient key={el._id} {...el} handleOpenIngridientModal={handleOpenIngridientModal} />
+                <BurgerIngridient
+                  key={el._id}
+                  el={el}
+                  {...el}
+                />
               ))}
           </ul>
         </div>

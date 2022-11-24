@@ -1,92 +1,172 @@
-import React, { useContext } from "react";
 import {
   Button,
   ConstructorElement,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerConstructor.module.css";
-import bun02 from "../../images/bun-02.svg";
-import PropTypes from 'prop-types';
-import { IngridientsContext } from "../../context/appContext";
+import { useSelector, useDispatch } from "react-redux";
+import { useDrop, useDrag } from "react-dnd";
+import {
+  ADD_ITEM_TO_CONSTRUCTOR,
+  REMOVE_ITEM_FROM_CONSTRUCTOR,
+  MOVE_ITEM_IN_CONSTRUCTOR,
+  makeOrderAction,
+  CLEAR_MODAL_ORDER_DETAILS_DATA,
+  CLEAR_CONSTRUCTOR,
+} from "../../services/actions/cart";
+import { v4 as uuidv4 } from "uuid";
+import graphics from "../../images/graphics.svg";
+import ConstructorElementWrapper from "../ConstructorElementWrapper/ConstructorElementWrapper";
+import OrderDetails from "../OrderDetails/OrderDetails";
+import Modal from "../Modal/Modal";
 
+export default function BurgerConstructor() {
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.cart.burgerConstructor);
+  const isDisabled = data.bun.length ? false : true;
+  const isMakeOrderData = useSelector(
+    (state) => state.orderDetails.orderDetailsData
+  );
+  const isMakeOrdredPending = useSelector(
+    (state) => state.orderDetails.orderDetailsDataPending
+  );
+  const closeOrder = () => {
+    dispatch({ type: CLEAR_MODAL_ORDER_DETAILS_DATA });
+    dispatch({
+      type: CLEAR_CONSTRUCTOR,
+    });
+  };
 
-const burgerIngredientsPropTypes = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-});
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
-  handleOpenModal: PropTypes.func
-};
-
-export default function BurgerConstructor({ handleOpenModal }) {
-  const data = useContext(IngridientsContext)
   function handleClick() {
-    const orderData = data.map(el => el._id);
-    handleOpenModal(orderData)
+    const bunIds = data.bun.map((el) => el._id);
+    const ingridientIds = data.ingredients.map((el) => el._id);
+
+    dispatch(makeOrderAction([...bunIds, ...ingridientIds]));
   }
+  const [{ isHover }, dropBun] = useDrop({
+    accept: "bun",
+    drop(item) {
+      dispatch({
+        type: ADD_ITEM_TO_CONSTRUCTOR,
+        payload: { ...item, id: uuidv4() },
+      });
+    },
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+  });
+  function handleDeleteElement(id) {
+    dispatch({
+      type: REMOVE_ITEM_FROM_CONSTRUCTOR,
+      id: id,
+    });
+  }
+  const moveCard = (dragIndex, hoverIndex) => {
+    dispatch({
+      type: MOVE_ITEM_IN_CONSTRUCTOR,
+      dragIndex,
+      hoverIndex,
+    });
+  };
   return (
     <>
-      <div
-        className={styles.burgerConstructor}
-        style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-      >
-        {data && data.filter(el => el.type === 'bun').map((el, i) => i === 0 && (
-          <ConstructorElement
-          key={el._id}
-          extraClass="ml-6"
-          type="top"
-          isLocked={true}
-          text={`${el.name} (верх)`}
-          price={el.price}
-          thumbnail={el.image}
-        />
-        ))}   
-        <div className={styles.scrollable}>
-          {data &&
-            data.filter(el => el.type !== 'bun').map((el, i) => (
-              <ConstructorElement
-                extraClass={`${styles.draggable}`}
-                key={el._id}
-                type={el.type}
-                text={el.name}
-                price={el.price}
-                thumbnail={el.image}
-              />
-            ))}
-        </div>
-        {data && data.filter(el => el.type === 'bun').map((el, i) => i === 0 && (
-          <ConstructorElement
-          key={el._id}
-          extraClass="ml-6"
-          type="bottom"
-          isLocked={true}
-          text={`${el.name} (низ)`}
-          price={el.price}
-          thumbnail={el.image}
-        />
-        ))}   
+      <div ref={dropBun} className={styles.burgerConstructor}>
+        {data.bun.length ? (
+          <>
+            {data &&
+              data.bun.map(
+                (el, i) =>
+                  i === 0 && (
+                    <ConstructorElement
+                      key={el.id}
+                      extraClass="ml-6"
+                      type="top"
+                      isLocked={true}
+                      text={`${el.name} (верх)`}
+                      price={el.price}
+                      thumbnail={el.image}
+                    />
+                  )
+              )}
+            <div className={styles.scrollable}>
+              {data &&
+                data.ingredients.map((el, i) => (
+                  <ConstructorElementWrapper
+                    {...el}
+                    index={i}
+                    handleDeleteElement={handleDeleteElement}
+                    moveCard={moveCard}
+                    key={el.id}
+                  />
+                ))}
+            </div>
+            {data &&
+              data.bun.map(
+                (el, i) =>
+                  i === 0 && (
+                    <ConstructorElement
+                      key={el.id}
+                      extraClass="ml-6"
+                      type="bottom"
+                      isLocked={true}
+                      text={`${el.name} (низ)`}
+                      price={el.price}
+                      thumbnail={el.image}
+                    />
+                  )
+              )}
+          </>
+        ) : (
+          <>
+            <ConstructorElement
+              extraClass="ml-6"
+              type="top"
+              isLocked={true}
+              text={`сначала выберите булочку`}
+              thumbnail={graphics}
+            />
+            <ConstructorElement
+              extraClass="ml-6"
+              isLocked={true}
+              text={`перетащите ингридиент`}
+              thumbnail={graphics}
+            />
+            <ConstructorElement
+              extraClass="ml-6"
+              type="bottom"
+              isLocked={true}
+              text={`сначала выберите булочку`}
+              thumbnail={graphics}
+            />
+          </>
+        )}
       </div>
       <section className={`${styles.total} mt-10 mr-4`}>
         <div className={`${styles.priceWrap} mr-10`}>
-          <span
-            className={`${styles.price} text text_type_digits-medium`}
-          >
-            {data && data.reduce((acc, prev) => {
-              return (acc + prev.price);
-            }, 0)}
+          <span className={`${styles.price} text text_type_digits-medium`}>
+            {data.bun[0]
+              ? data &&
+                data.ingredients.reduce((acc, prev) => {
+                  return acc + prev.price;
+                }, 0) +
+                  data?.bun[0]?.price * 2
+              : 0}
           </span>
           <CurrencyIcon className="pr-2" type="primary" />
         </div>
 
-        <Button onClick={handleClick} type="primary" size="large" htmlType='button'>
+        <Button
+          onClick={handleClick}
+          type="primary"
+          size="large"
+          htmlType="button"
+          disabled={isDisabled}
+        >
           Нажми на меня
         </Button>
+        {isMakeOrdredPending ? <Modal><h1 className="text text_type_main-large p-15">Наши системы регистрируют ваш заказ, ожидайте...</h1></Modal> : ''}
+        {isMakeOrderData && <Modal handleCloseModal={closeOrder}><OrderDetails /></Modal>}
       </section>
     </>
   );
-
 }
