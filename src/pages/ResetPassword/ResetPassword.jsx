@@ -4,14 +4,24 @@ import {
   PasswordInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ResetPassword.module.css";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { resetPasswordAction } from "../../services/actions/resetPassword";
 
 export default function ResetPassword() {
+  const history = useHistory()
+  const dispatch = useDispatch();
+  const isSuccess = useSelector(state => state.reset.data?.message)
   const [state, setState] = useState({
     code: "",
     password: "",
   });
+  useEffect(() => {
+    if (isSuccess === 'Password successfully reset') {
+      history.push('/login')
+    }
+  }, [isSuccess, history])
   function handleInputChange(e) {
     setState({
       ...state,
@@ -20,6 +30,7 @@ export default function ResetPassword() {
   }
   function handleSubmit(e) {
     e.preventDefault();
+    dispatch(resetPasswordAction(state.password, state.code))
   }
   return (
     <div className={styles.resetPassword}>

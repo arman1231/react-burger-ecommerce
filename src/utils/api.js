@@ -114,6 +114,25 @@ class Api {
       body: JSON.stringify({ email, password, name }),
     })
   }
+
+  forgotPassword(email) {
+    return fetch(`${this._baseUrl}/api/password-reset`, {
+      headers: this._headers,
+      method: "POST",
+      body: JSON.stringify({ email }),
+      // credentials: 'include',
+    }).then(this._checkResponse);
+  }
+
+  resetPassword(password, token) {
+    return fetch(`${this._baseUrl}/api/password-reset/reset`, {
+      headers: this._headers,
+      method: "POST",
+      body: JSON.stringify({ password, token }),
+      // credentials: 'include',
+    }).then(this._checkResponse);
+  }
+
 }
 
 export const api = new Api({
