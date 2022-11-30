@@ -1,4 +1,4 @@
-import { REGISTER_PENDING, REGISTER_FULFILED, REGISTER_FAILED, LOGIN_PENDING, LOGIN_FULFILED, LOGIN_FAILED, LOGOUT_PENDING, LOGOUT_FULFILED, LOGOUT_FAILED, CLEAR_LOCALSTORAGE } from '../actions/auth'
+import { REGISTER_PENDING, REGISTER_FULFILED, REGISTER_FAILED, LOGIN_PENDING, LOGIN_FULFILED, LOGIN_FAILED, LOGOUT_PENDING, LOGOUT_FULFILED, LOGOUT_FAILED, CLEAR_LOCALSTORAGE, SET_TOKEN, GET_USER_PENDING, GET_USER_FULFILED, GET_USER_FAILED, UPDATE_USER_PENDING, UPDATE_USER_FULFILED, UPDATE_USER_FAILED } from '../actions/auth'
 
 const authInitialState = {
     isAuthChecked: false,
@@ -19,6 +19,7 @@ const authInitialState = {
 
     logoutError: null,
     logoutPending: false,
+
 }
 
 export const authReducer = (state = authInitialState, action) => {
@@ -85,7 +86,56 @@ export const authReducer = (state = authInitialState, action) => {
         }
         case CLEAR_LOCALSTORAGE: {
             localStorage.clear();
-            break;
+            return {
+                ...state
+            }
+        }
+        case SET_TOKEN: {
+            localStorage.setItem('refreshToken', JSON.stringify(state.userData.refreshToken));
+            localStorage.setItem('accessToken', JSON.stringify(state.userData.accessToken));
+            return {
+                ...state
+            }
+        }
+        case GET_USER_PENDING: {
+            return {
+                ...state,
+                getUserPending: true
+            }
+        }
+        case GET_USER_FULFILED: {
+            return {
+                ...state,
+                getUserPending: false,
+                userData: action.payload
+            }
+        }
+        case GET_USER_FAILED: {
+            return {
+                ...state,
+                getUserPending: false,
+                getUserError: action.payload
+            }
+        }
+        case UPDATE_USER_PENDING: {
+            return {
+                ...state,
+                updateUserPending: true
+            }
+        }
+        case UPDATE_USER_FULFILED: {
+            return {
+                ...state,
+                updateUserPending: false,
+                userData: action.payload
+            }
+        }
+        case UPDATE_USER_FAILED: {
+            return {
+                ...state,
+                updateUserError: action.payload,
+                updateUserPending: false
+            }
         }
         default: {
             return state

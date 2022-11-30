@@ -32,14 +32,14 @@ export default function Register() {
     // api.register(email, password, name).then((data) => console.log(data));
     dispatch(registerAction(email, password, name))
   }
-  useEffect(() => {
-    if (userState) {
-      localStorage.setItem('accessToken', JSON.stringify(userState.accessToken))
-      localStorage.setItem('refreshToken', JSON.stringify(userState.refreshToken))
-      history.push('/')
-    }
-  }, [userState, history])
-  console.log(userState);
+  // useEffect(() => {
+  //   if (userState) {
+  //     localStorage.setItem('accessToken', JSON.stringify(userState.accessToken))
+  //     localStorage.setItem('refreshToken', JSON.stringify(userState.refreshToken))
+  //     history.push('/')
+  //   }
+  // }, [userState, history])
+  // console.log(userState);
   return (
     <div className={styles.register}>
       <h1 className={`${styles.heading} text text_type_main-medium mb-6`}>

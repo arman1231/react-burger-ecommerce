@@ -39,8 +39,19 @@ export const fetchIngridients = () => {
       dispatch({
         type: MAKE_ORDER_PENDING
       })
+      const accessToken = localStorage.getItem("accessToken");
+      // api.fetchWithRefresh('https://norma.nomoreparties.space/api/orders', {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: JSON.parse(accessToken),
+      //   },
+      //   method: "POST",
+      //   body: JSON.stringify({
+      //     ingredients: data,
+      //   })
+      // })
       api
-      .makeOrder(data)
+      .makeOrder(JSON.parse(accessToken), data)
       .then((res) => {
         dispatch({
           type: MAKE_ORDER_FULFILED,

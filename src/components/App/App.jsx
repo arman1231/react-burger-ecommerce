@@ -13,6 +13,8 @@ import ResetPassword from "../../pages/ResetPassword/ResetPassword";
 import Profile from "../../pages/Profile/Profile";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import { api } from "../../utils/api";
+import { getUserAction } from "../../services/actions/auth";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,9 +22,19 @@ function App() {
     (state) => state.burgerIngredients.burgerIngredients
   );
   const isLoggedIn = useSelector((state) => state.auth.userData);
-  console.log(isLoggedIn);
+  
+  function checkToken() {
+    if (localStorage.getItem("accessToken")) {
+      const accessToken = localStorage.getItem("accessToken");
+      if (accessToken) {
+        dispatch(getUserAction(JSON.parse(accessToken)))
+      }
+    }
+  }
+
   useEffect(() => {
     dispatch(fetchIngridients());
+    checkToken()
   }, [dispatch]);
 
   if (!data) {
@@ -39,7 +51,6 @@ function App() {
           </Route>
           <Route exact path="/login">
             {isLoggedIn ? <Redirect to="/" /> : <Login />}
-            <Login />
           </Route>
           <Route exact path="/register">
             {isLoggedIn ? <Redirect to="/" /> : <Register />}

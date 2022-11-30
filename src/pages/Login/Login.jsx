@@ -29,13 +29,13 @@ export default function Login() {
     dispatch(loginAction(email, password))
     // isSuccess && history.push('/')
   }
-  useEffect(() => {
-    if (userState) {
-      localStorage.setItem('accessToken', JSON.stringify(userState.accessToken))
-      localStorage.setItem('refreshToken', JSON.stringify(userState.refreshToken))
-      // history.push('/')
-    }
-  }, [userState, history]);
+  // useEffect(() => {
+  //   if (userState) {
+  //     localStorage.setItem('accessToken', JSON.stringify(userState.accessToken))
+  //     localStorage.setItem('refreshToken', JSON.stringify(userState.refreshToken))
+  //     // history.push('/')
+  //   }
+  // }, [userState, history]);
   return (
     <div className={styles.login}>
       <h1 className={`${styles.heading} text text_type_main-medium mb-6`}>Вход</h1>

@@ -9,7 +9,7 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { api } from "../../utils/api";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutAction } from "../../services/actions/auth";
+import { logoutAction, updateUserAction } from "../../services/actions/auth";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -19,7 +19,6 @@ export default function Profile() {
     email: email,
     password: "",
   });
-  const [showSubmitButton, setShowSubmitButton] = useState(false);
   function handleInputChange(e) {
     setState({
       ...state,
@@ -28,16 +27,12 @@ export default function Profile() {
   }
   function handleSubmit(e) {
     e.preventDefault();
+    const accessToken = localStorage.getItem("accessToken");
+    dispatch(updateUserAction(JSON.parse(accessToken), state.email, state.password, state.name))
   }
   function handleLogout(e) {
     e.preventDefault();
     dispatch(logoutAction(JSON.parse(localStorage.getItem("refreshToken"))))
-    // api
-    //   .logout(JSON.parse(localStorage.getItem("refreshToken")))
-    //   .then(() => {
-    //     localStorage.clear();
-    //   })
-    //   .catch((err) => console.log(err));
   }
   return (
     <div className={styles.profile}>
@@ -76,6 +71,10 @@ export default function Profile() {
             </NavLink>
           </li>
         </ul>
+        <p className='text text_type_main-default'>
+        В этом разделе вы можете
+изменить свои персональные данные
+        </p>
       </nav>
       <form className={styles.form} onSubmit={handleSubmit}>
         <Input
@@ -89,8 +88,6 @@ export default function Profile() {
           errorText={"Ошибка"}
           size={"default"}
           extraClass="mb-6"
-          onFocus={() => setShowSubmitButton(true)}
-          onBlur={() => setShowSubmitButton(false)}
         />
         <EmailInput
           icon={"EditIcon"}
@@ -99,23 +96,19 @@ export default function Profile() {
           name={"email"}
           isIcon={false}
           extraClass="mb-6"
-          onFocus={() => setShowSubmitButton(true)}
-          onBlur={() => setShowSubmitButton(false)}
         />
         <PasswordInput
           onChange={handleInputChange}
           value={state.password}
           name={"password"}
           extraClass="mb-6"
-          onFocus={() => setShowSubmitButton(true)}
-          onBlur={() => setShowSubmitButton(false)}
         />
         <div className={styles.buttons}>
           <Button htmlType="button" type="secondary" size="medium">
             Отмена
           </Button>
           <Button
-            disabled={!(state.email.length > 0 && state.password.length > 0)}
+            // disabled={!(state.email.length > 0 && state.password.length > 0)}
             htmlType="submit"
             type="primary"
             size="medium"
