@@ -1,6 +1,8 @@
 import { FORGOT_PASSWORD_PENDING, FORGOT_PASSWORD_FULFILED, FORGOT_PASSWORD_FAILED, RESET_PASSWORD_PENDING, RESET_PASSWORD_FULFILED, RESET_PASSWORD_FAILED } from '../actions/resetPassword'
 
 const resetInitialState = {
+    isResetPassowrdRequested: false,
+
     data: null,
   
     forgotPassordError: null,
@@ -22,7 +24,8 @@ export const resetPasswordReducer = (state = resetInitialState, action) => {
             return {
                 ...state,
                 forgotPassordPending: false,
-                data: action.payload
+                data: action.payload,
+                isResetPassowrdRequested: true
             }
         }
         case FORGOT_PASSWORD_FAILED: {

@@ -5,25 +5,28 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 
 import AppHeaderStyle from "./AppHeader.module.css";
 
 export default function AppHeader() {
+  const isConstructor = !!useRouteMatch({ path: '/', exact: true });
+  const isFeed = !!useRouteMatch({ path: '/feed' });
+  const isProfile = !!useRouteMatch({ path: '/profile' });
   const userName = useSelector(state => state.auth?.userData?.user?.name) 
   return (
     <header className={`${AppHeaderStyle.header} pt-4 pb-4`}>
       <nav className={AppHeaderStyle.menu}>
         <div className={AppHeaderStyle.menuLeft}>
           <Link className={`${AppHeaderStyle.menuLink} p-5`} to="/">
-            <BurgerIcon type="primary" />{" "}
-            <span className="text text_type_main-default ml-2">
+            <BurgerIcon type={!isConstructor ? 'secondary' : 'primary'} />{" "}
+            <span className={`text text_type_main-default ml-2 ${!isConstructor && 'text_color_inactive'}`}>
               Конструктор
             </span>
           </Link>
           <Link className={`${AppHeaderStyle.menuLink} ml-2 p-5`} to="#">
-            <ListIcon type="secondary" />{" "}
-            <span className="text text_type_main-default text_color_inactive ml-2">
+            <ListIcon type={!isFeed ? 'secondary' : 'primary'} />{" "}
+            <span className={`text text_type_main-default ml-2 ${!isFeed && 'text_color_inactive'}`}>
               Лента заказов
             </span>
           </Link>
@@ -31,8 +34,8 @@ export default function AppHeader() {
         <Link className={AppHeaderStyle.logo} to="/"><Logo /></Link>
         <div className={AppHeaderStyle.menuRigth}>
           <Link className={`${AppHeaderStyle.menuLink} p-5`} to='/profile'>
-            <ProfileIcon type="secondary" />
-            <span className="text text_type_main-default text_color_inactive ml-2">
+            <ProfileIcon type={!isProfile ? 'secondary' : 'primary'} />
+            <span className={`text text_type_main-default ml-2 ${!isProfile && 'text_color_inactive'}`}>
               {userName ? userName : 'Личный кабинет'}
             </span>
           </Link>

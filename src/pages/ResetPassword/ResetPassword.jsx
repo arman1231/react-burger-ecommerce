@@ -13,6 +13,7 @@ export default function ResetPassword() {
   const history = useHistory()
   const dispatch = useDispatch();
   const isSuccess = useSelector(state => state.reset.data?.message)
+  const isResetPassowrdRequested = useSelector(state => state.reset.isResetPassowrdRequested);
   const [state, setState] = useState({
     code: "",
     password: "",
@@ -20,6 +21,9 @@ export default function ResetPassword() {
   useEffect(() => {
     if (isSuccess === 'Password successfully reset') {
       history.push('/login')
+    }
+    if (!isResetPassowrdRequested) {
+      history.push('/register')
     }
   }, [isSuccess, history])
   function handleInputChange(e) {

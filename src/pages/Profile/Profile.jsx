@@ -27,8 +27,7 @@ export default function Profile() {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    const accessToken = localStorage.getItem("accessToken");
-    dispatch(updateUserAction(JSON.parse(accessToken), state.email, state.password, state.name))
+    dispatch(updateUserAction(state.email, state.password, state.name))
   }
   function handleLogout(e) {
     e.preventDefault();

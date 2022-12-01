@@ -126,13 +126,13 @@ export const getUserAction = (token) => {
   };
 };
 
-export const updateUserAction = (token, email, password, name) => {
+export const updateUserAction = (email, password, name) => {
     return function (dispatch) {
         dispatch({
             type: UPDATE_USER_PENDING
         })
         api
-        .updateUser(token, email, password, name)
+        .updateUser(email, password, name)
         .then((res) => {
             dispatch({
                 type: UPDATE_USER_FULFILED,

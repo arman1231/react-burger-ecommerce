@@ -4,9 +4,10 @@ import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
 import BurgerIngredientsStyles from "./BurgerIngredients.module.css";
 import { useSelector } from "react-redux";
 import { useInView } from 'react-intersection-observer';
+import { Link, useLocation } from "react-router-dom";
 
 export default function BurgerIngredients() {
-
+  let location = useLocation();
   const data = useSelector((state) => state.burgerIngredients.burgerIngredients);
   const FIRST_TAB = "Булки";
   const SECOND_TAB = "Соусы";
@@ -53,11 +54,18 @@ export default function BurgerIngredients() {
             {data
               .filter((el) => el.type === "bun")
               .map((el) => (
+                <Link key={el._id} to={{
+                  pathname: `/ingredients/${el._id}`,
+                  // This is the trick! This link sets
+                  // the `background` in location state.
+                  state: { background: location }
+                }}>
                 <BurgerIngridient
-                  key={el._id}
+                  // key={el._id}
                   el={el}
                   {...el}
                 />
+                </Link>
               ))}
           </ul>
         </div>

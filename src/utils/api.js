@@ -8,34 +8,34 @@ class Api {
     this.refreshToken = this.refreshToken.bind(this);
   }
   _checkResponse(res) {
+    const json = res.json();
     if (res.ok) {
-      return res.json();
+      return json;
     } else {
+      return json.then(err => Promise.reject(err));
     }
-    console.log(`Ошибка: ${res.status}`);
-    return Promise.reject(`Ошибка: ${res.status}`);
-  }
+}
 
-  async fetchWithRefresh(url, options) {
-    try {
-      const res = await fetch(url, options);
-      return await this._checkResponse(res);
-    } catch (err) {
-      if (err.message === "jwt expired") {
-        const refreshData = await this.refreshToken(); //обновляем токен
-        if (!refreshData.success) {
-          Promise.reject(refreshData);
-        }
-        localStorage.setItem("refreshToken", refreshData.refreshToken);
-        localStorage.setItem("accessToken", refreshData.accessToken);
-        options.headers.authorization = refreshData.accessToken;
-        const res = await fetch(url, options); //повторяем запрос
-        return await this._checkResponse(res);
-      } else {
-        return Promise.reject(err);
+async fetchWithRefresh(url, options) {
+  try {
+    const res = await fetch(url, options)
+    return await this._checkResponse(res)
+  } catch (err) {
+    if (err.message === "jwt expired") {
+      const refreshData = await this.refreshToken(JSON.parse(localStorage.getItem("refreshToken"))); //обновляем токен
+      if (!refreshData.success) {
+        return Promise.reject(refreshData);
       }
+      localStorage.setItem("refreshToken", refreshData.refreshToken);
+      localStorage.setItem("accessToken", refreshData.accessToken);
+      options.headers.authorization = refreshData.accessToken;
+      const res = await fetch(url, options); //повторяем запрос
+      return await this._checkResponse(res);
+    } else {
+      return Promise.reject(err);
     }
   }
+}
 
   getIngridients() {
     return fetch(`${this._baseUrl}/api/ingredients`, {
@@ -103,13 +103,13 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  updateUser(token, email, password, name) {
+  updateUser(email, password, name) {
     return this.fetchWithRefresh(`${BASE_URL}/api/auth/user`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: token,
+        Authorization: JSON.parse(localStorage.getItem("accessToken")),
       },
       body: JSON.stringify({ email, password, name }),
     })

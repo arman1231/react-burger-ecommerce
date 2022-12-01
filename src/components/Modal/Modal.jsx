@@ -3,6 +3,8 @@ import styles from "./Modal.module.css";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { CLEAR_MODAL_INGRIDIENT_DATA } from "../../services/actions/cart";
 
 const modalRoot = document.getElementById("react-modals");
 
@@ -12,6 +14,7 @@ Modal.propTypes = {
 };
 
 export default function Modal({ children, handleCloseModal }) {
+  const dispatch = useDispatch();
   function handleClick() {
     handleCloseModal();
   }

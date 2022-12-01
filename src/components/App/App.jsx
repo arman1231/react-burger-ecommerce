@@ -3,8 +3,8 @@ import AppHeader from "../AppHeader/AppHeader";
 import Main from "../Main/Main";
 import appStyles from "./App.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchIngridients } from "../../services/actions/cart";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { CLEAR_MODAL_INGRIDIENT_DATA, fetchIngridients } from "../../services/actions/cart";
+import { Switch, Route, Redirect, useLocation, useHistory } from "react-router-dom";
 import Login from "../../pages/Login/Login";
 import NotFound from "../../pages/NotFound/NotFound";
 import Register from "../../pages/Register/Register";
@@ -15,8 +15,16 @@ import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { api } from "../../utils/api";
 import { getUserAction } from "../../services/actions/auth";
+import Modal from "../Modal/Modal";
 
 function App() {
+  const history = useHistory()
+  const isModalIngridientData = useSelector(
+    (state) => state.ingredientDetails.modalIngridientData
+  );
+  const location = useLocation();
+  let background = location.state && location.state.background;
+  console.log(background);
   const dispatch = useDispatch();
   const data = useSelector(
     (state) => state.burgerIngredients.burgerIngredients
@@ -40,12 +48,17 @@ function App() {
   if (!data) {
     return <></>;
   }
-
+  function handleClose() {
+    history.goBack()
+    dispatch({
+      type: CLEAR_MODAL_INGRIDIENT_DATA,
+    });
+  }
   return (
     <div className={appStyles.page}>
       <AppHeader />
       <main className={appStyles.main}>
-        <Switch>
+        <Switch location={background || location}>
           <Route exact path="/">
             <Main />
           </Route>
@@ -61,7 +74,7 @@ function App() {
           <Route exact path="/reset-password">
             {isLoggedIn ? <Redirect to="/" /> : <ResetPassword />}
           </Route>
-          <Route exact path="/ingredients/:id">
+          <Route path="/ingredients/:id">
             <IngredientDetails />
           </Route>
           <ProtectedRoute
@@ -69,11 +82,14 @@ function App() {
             component={Profile}
             isLoggedIn={isLoggedIn}
           />
-
           <Route path="*">
             <NotFound />
           </Route>
         </Switch>
+        {isModalIngridientData && (
+        <Modal handleCloseModal={handleClose}><IngredientDetails /></Modal>
+      )}
+        {background && <Route path="/ingredients/:id" children={<Modal handleCloseModal={handleClose}><IngredientDetails /></Modal>} />}
       </main>
     </div>
   );

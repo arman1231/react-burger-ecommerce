@@ -1,8 +1,12 @@
 import styles from "./IngredientDetails.module.css";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from "react-router-dom";
 
 export default function IngredientDetails() {
+  const { id }  = useParams();
   const ingridientData = useSelector(state => state.ingredientDetails.modalIngridientData);
+  const burgerIngredient = useSelector(state => state.burgerIngredients.burgerIngredients.filter((el) => el._id === id))
+  console.log(burgerIngredient.name);
   return (
       <div className={styles.ingredientDetails}>
         <p className="text text_type_main-large pt-10">Детали ингредиента</p>
