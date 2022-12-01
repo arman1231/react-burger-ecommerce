@@ -1,16 +1,15 @@
 import { BASE_URL } from "../utils/constants";
 
 class Api {
-  constructor({ baseUrl, headers }) {
+  constructor({ baseUrl }) {
     this._baseUrl = baseUrl;
-    this._headers = headers;
     this._checkResponse = this._checkResponse.bind(this);
     this.refreshToken = this.refreshToken.bind(this);
   }
   _checkResponse(res) {
     const json = res.json();
     if (res.ok) {
-      return json;
+      return json
     } else {
       return json.then(err => Promise.reject(err));
     }
@@ -22,14 +21,15 @@ async fetchWithRefresh(url, options) {
     return await this._checkResponse(res)
   } catch (err) {
     if (err.message === "jwt expired") {
-      const refreshData = await this.refreshToken(JSON.parse(localStorage.getItem("refreshToken"))); //обновляем токен
+      console.log("at refresh");
+      const refreshData = await this.refreshToken();
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       localStorage.setItem("accessToken", refreshData.accessToken);
       options.headers.authorization = refreshData.accessToken;
-      const res = await fetch(url, options); //повторяем запрос
+      const res = await fetch(url, options);
       return await this._checkResponse(res);
     } else {
       return Promise.reject(err);
@@ -39,16 +39,17 @@ async fetchWithRefresh(url, options) {
 
   getIngridients() {
     return fetch(`${this._baseUrl}/api/ingredients`, {
-      headers: this._headers,
-      // credentials: 'include',
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      }     // credentials: 'include',
     }).then(this._checkResponse);
   }
 
-  makeOrder(token, orderList) {
+  makeOrder(orderList) {
     return this.fetchWithRefresh(`${this._baseUrl}/api/orders`, {
       headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
+        "Content-Type": "application/json;charset=utf-8",
+        Authorization: localStorage.getItem("accessToken"),
       },
       method: "POST",
       body: JSON.stringify({
@@ -60,7 +61,9 @@ async fetchWithRefresh(url, options) {
 
   register(email, password, name) {
     return fetch(`${this._baseUrl}/api/auth/register`, {
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
       method: "POST",
       body: JSON.stringify({ email, password, name }),
       // credentials: 'include',
@@ -69,38 +72,43 @@ async fetchWithRefresh(url, options) {
 
   login(email, password) {
     return fetch(`${this._baseUrl}/api/auth/login`, {
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
       method: "POST",
       body: JSON.stringify({ email, password }),
       // credentials: 'include',
     }).then(this._checkResponse);
   }
 
-  logout(token) {
+  logout() {
     return fetch(`${this._baseUrl}/api/auth/logout`, {
-      headers: this._headers,
-      method: "POST",
-      body: JSON.stringify({ token }),
-      // credentials: 'include',
-    }).then(this._checkResponse);
-  }
-
-  refreshToken(token) {
-    return fetch(`${this._baseUrl}/api/auth/token`, {
-      headers: this._headers,
-      method: "POST",
-      body: JSON.stringify({ token }),
-      // credentials: 'include',
-    }).then(this._checkResponse);
-  }
-
-  getUser(token) {
-    return fetch(`${this._baseUrl}/api/auth/user`, {
       headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
+        "Content-Type": "application/json;charset=utf-8",
       },
+      method: "POST",
+      body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
+      // credentials: 'include',
     }).then(this._checkResponse);
+  }
+
+  refreshToken() {
+    return fetch(`${this._baseUrl}/api/auth/token`, {
+      headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      },
+      method: "POST",
+      body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
+    }).then(this._checkResponse);
+  }
+
+  getUser() {
+    return this.fetchWithRefresh(`${this._baseUrl}/api/auth/user`, {
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        Authorization: localStorage.getItem("accessToken"),
+      },
+    })
   }
 
   updateUser(email, password, name) {
@@ -109,7 +117,7 @@ async fetchWithRefresh(url, options) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: JSON.parse(localStorage.getItem("accessToken")),
+        Authorization: localStorage.getItem("accessToken"),
       },
       body: JSON.stringify({ email, password, name }),
     })
@@ -117,7 +125,9 @@ async fetchWithRefresh(url, options) {
 
   forgotPassword(email) {
     return fetch(`${this._baseUrl}/api/password-reset`, {
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
       method: "POST",
       body: JSON.stringify({ email }),
       // credentials: 'include',
@@ -126,7 +136,9 @@ async fetchWithRefresh(url, options) {
 
   resetPassword(password, token) {
     return fetch(`${this._baseUrl}/api/password-reset/reset`, {
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
       method: "POST",
       body: JSON.stringify({ password, token }),
       // credentials: 'include',
@@ -138,8 +150,4 @@ async fetchWithRefresh(url, options) {
 export const api = new Api({
   //baseUrl: `${window.location.protocol}${process.env.REACT_APP_API_URL || '//localhost:3001'}`,
   baseUrl: `${BASE_URL}`,
-  headers: {
-    // authorization: `${localStorage.getItem('jwt')}`,
-    "Content-Type": "application/json",
-  },
 });

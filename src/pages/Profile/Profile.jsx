@@ -31,7 +31,7 @@ export default function Profile() {
   }
   function handleLogout(e) {
     e.preventDefault();
-    dispatch(logoutAction(JSON.parse(localStorage.getItem("refreshToken"))))
+    dispatch(logoutAction())
   }
   return (
     <div className={styles.profile}>

@@ -24,7 +24,6 @@ function App() {
   );
   const location = useLocation();
   let background = location.state && location.state.background;
-  console.log(background);
   const dispatch = useDispatch();
   const data = useSelector(
     (state) => state.burgerIngredients.burgerIngredients
@@ -35,7 +34,7 @@ function App() {
     if (localStorage.getItem("accessToken")) {
       const accessToken = localStorage.getItem("accessToken");
       if (accessToken) {
-        dispatch(getUserAction(JSON.parse(accessToken)))
+        dispatch(getUserAction())
       }
     }
   }

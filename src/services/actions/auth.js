@@ -25,14 +25,11 @@ export const registerAction = (email, password, name) => {
     api
       .register(email, password, name)
       .then((res) => {
-        dispatch({
+          localStorage.setItem('refreshToken', res.refreshToken);
+          localStorage.setItem('accessToken', res.accessToken);
+          dispatch({
           type: REGISTER_FULFILED,
           payload: res,
-        });
-      })
-      .then(() => {
-        dispatch({
-          type: SET_TOKEN,
         });
       })
       .catch((err) => {
@@ -53,14 +50,11 @@ export const loginAction = (email, password) => {
     api
       .login(email, password)
       .then((res) => {
+        localStorage.setItem('refreshToken', res.refreshToken);
+        localStorage.setItem('accessToken', res.accessToken);
         dispatch({
           type: LOGIN_FULFILED,
           payload: res,
-        });
-      })
-      .then(() => {
-        dispatch({
-          type: SET_TOKEN,
         });
       })
       .catch((err) => {
@@ -73,15 +67,17 @@ export const loginAction = (email, password) => {
   };
 };
 
-export const logoutAction = (token) => {
+export const logoutAction = () => {
   return function (dispatch) {
     dispatch({
       type: LOGOUT_PENDING,
     });
     api
-      .logout(token)
+      .logout()
       .then((res) => {
-        dispatch({
+          localStorage.removeItem('refreshToken');
+          localStorage.removeItem('accessToken');
+          dispatch({
           type: LOGOUT_FULFILED,
           payload: res,
         });
@@ -101,13 +97,13 @@ export const logoutAction = (token) => {
   };
 };
 
-export const getUserAction = (token) => {
+export const getUserAction = () => {
   return function (dispatch) {
     dispatch({
       type: GET_USER_PENDING,
     });
     api
-      .getUser(token)
+      .getUser()
       .then((res) => {
         if (res) {
           dispatch({

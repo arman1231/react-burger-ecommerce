@@ -1,49 +1,44 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useRef} from "react";
+import React, { useRef } from "react";
 import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
 import BurgerIngredientsStyles from "./BurgerIngredients.module.css";
 import { useSelector } from "react-redux";
-import { useInView } from 'react-intersection-observer';
+import { useInView } from "react-intersection-observer";
 import { Link, useLocation } from "react-router-dom";
 
 export default function BurgerIngredients() {
   let location = useLocation();
-  const data = useSelector((state) => state.burgerIngredients.burgerIngredients);
+  const data = useSelector(
+    (state) => state.burgerIngredients.burgerIngredients
+  );
   const FIRST_TAB = "Булки";
   const SECOND_TAB = "Соусы";
   const THIRD_TAB = "Начинки";
   const rootScroll = useRef();
 
-  const [ref, inView ] = useInView({
+  const [ref, inView] = useInView({
     root: rootScroll.current,
     threshold: 0.1,
-  })
-  const [ref2, inView2 ] = useInView({
+  });
+  const [ref2, inView2] = useInView({
     root: rootScroll.current,
     // rootMargin: '100px',
     threshold: 0.8,
-  })
-  const [ref3, inView3 ] = useInView({root: rootScroll.current,
-    threshold: 0.3,})
+  });
+  const [ref3, inView3] = useInView({
+    root: rootScroll.current,
+    threshold: 0.3,
+  });
   return (
     <>
       <div className={BurgerIngredientsStyles.tabControls}>
-        <Tab
-          value={FIRST_TAB}
-          active={inView}
-        >
+        <Tab value={FIRST_TAB} active={inView}>
           Булки
         </Tab>
-        <Tab
-          value={SECOND_TAB}
-          active={inView2}
-        >
+        <Tab value={SECOND_TAB} active={inView2}>
           Соусы
         </Tab>
-        <Tab
-          value={THIRD_TAB}
-          active={inView3}
-        >
+        <Tab value={THIRD_TAB} active={inView3}>
           Начинки
         </Tab>
       </div>
@@ -54,17 +49,21 @@ export default function BurgerIngredients() {
             {data
               .filter((el) => el.type === "bun")
               .map((el) => (
-                <Link key={el._id} to={{
-                  pathname: `/ingredients/${el._id}`,
-                  // This is the trick! This link sets
-                  // the `background` in location state.
-                  state: { background: location }
-                }}>
-                <BurgerIngridient
-                  // key={el._id}
-                  el={el}
-                  {...el}
-                />
+                <Link
+                  className={BurgerIngredientsStyles.link}
+                  key={el._id}
+                  to={{
+                    pathname: `/ingredients/${el._id}`,
+                    // This is the trick! This link sets
+                    // the `background` in location state.
+                    state: { background: location },
+                  }}
+                >
+                  <BurgerIngridient
+                    key={el._id}
+                    el={el}
+                    {...el}
+                  />
                 </Link>
               ))}
           </ul>
@@ -75,11 +74,18 @@ export default function BurgerIngredients() {
             {data
               .filter((el) => el.type === "sauce")
               .map((el) => (
-                <BurgerIngridient
+                <Link
+                  className={BurgerIngredientsStyles.link}
                   key={el._id}
-                  el={el}
-                  {...el}
-                />
+                  to={{
+                    pathname: `/ingredients/${el._id}`,
+                    // This is the trick! This link sets
+                    // the `background` in location state.
+                    state: { background: location },
+                  }}
+                >
+                  <BurgerIngridient key={el._id} el={el} {...el} />
+                </Link>
               ))}
           </ul>
         </div>
@@ -89,11 +95,18 @@ export default function BurgerIngredients() {
             {data
               .filter((el) => el.type === "main")
               .map((el) => (
-                <BurgerIngridient
+                <Link
+                  className={BurgerIngredientsStyles.link}
                   key={el._id}
-                  el={el}
-                  {...el}
-                />
+                  to={{
+                    pathname: `/ingredients/${el._id}`,
+                    // This is the trick! This link sets
+                    // the `background` in location state.
+                    state: { background: location },
+                  }}
+                >
+                  <BurgerIngridient key={el._id} el={el} {...el} />
+                </Link>
               ))}
           </ul>
         </div>

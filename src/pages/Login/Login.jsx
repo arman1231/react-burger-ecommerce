@@ -4,15 +4,13 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./Login.module.css";
-import { Link, useHistory, Redirect } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { loginAction } from "../../services/actions/auth";
 
 export default function Login() {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const userState = useSelector(state => state.auth.userData)
   const [state, setState] = useState({
     email: "",
     password: ""
@@ -27,15 +25,7 @@ export default function Login() {
     const { email, password } = state;
     e.preventDefault()
     dispatch(loginAction(email, password))
-    // isSuccess && history.push('/')
   }
-  // useEffect(() => {
-  //   if (userState) {
-  //     localStorage.setItem('accessToken', JSON.stringify(userState.accessToken))
-  //     localStorage.setItem('refreshToken', JSON.stringify(userState.refreshToken))
-  //     // history.push('/')
-  //   }
-  // }, [userState, history]);
   return (
     <div className={styles.login}>
       <h1 className={`${styles.heading} text text_type_main-medium mb-6`}>Вход</h1>

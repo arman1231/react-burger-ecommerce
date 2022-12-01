@@ -28,6 +28,11 @@
 .tabControls {
   display: flex;
 }
+
+.link {
+  color: white;
+  text-decoration: none;
+}
 /* .image {
   width: 240px;
   height: 120px;
