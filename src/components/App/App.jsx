@@ -13,7 +13,6 @@ import ResetPassword from "../../pages/ResetPassword/ResetPassword";
 import Profile from "../../pages/Profile/Profile";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import { api } from "../../utils/api";
 import { getUserAction } from "../../services/actions/auth";
 import Modal from "../Modal/Modal";
 

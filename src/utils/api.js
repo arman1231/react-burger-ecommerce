@@ -49,7 +49,7 @@ async fetchWithRefresh(url, options) {
     return this.fetchWithRefresh(`${this._baseUrl}/api/orders`, {
       headers: {
         "Content-Type": "application/json;charset=utf-8",
-        Authorization: localStorage.getItem("accessToken"),
+        authorization: localStorage.getItem("accessToken"),
       },
       method: "POST",
       body: JSON.stringify({
@@ -106,7 +106,7 @@ async fetchWithRefresh(url, options) {
     return this.fetchWithRefresh(`${this._baseUrl}/api/auth/user`, {
       headers: {
         "Content-Type": "application/json;charset=utf-8",
-        Authorization: localStorage.getItem("accessToken"),
+        authorization: localStorage.getItem("accessToken"),
       },
     })
   }
@@ -117,7 +117,7 @@ async fetchWithRefresh(url, options) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: localStorage.getItem("accessToken"),
+        authorization: localStorage.getItem("accessToken"),
       },
       body: JSON.stringify({ email, password, name }),
     })
