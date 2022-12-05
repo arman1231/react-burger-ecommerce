@@ -120,7 +120,12 @@ export default function Profile() {
               {isChange && (
                 <>
                   {" "}
-                  <Button htmlType="button" type="secondary" size="medium" onClick={cancelChanges}>
+                  <Button
+                    htmlType="button"
+                    type="secondary"
+                    size="medium"
+                    onClick={cancelChanges}
+                  >
                     Отмена
                   </Button>
                   <Button

@@ -3,8 +3,17 @@ import AppHeader from "../AppHeader/AppHeader";
 import Main from "../Main/Main";
 import appStyles from "./App.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { CLEAR_MODAL_INGRIDIENT_DATA, fetchIngridients } from "../../services/actions/cart";
-import { Switch, Route, Redirect, useLocation, useHistory } from "react-router-dom";
+import {
+  CLEAR_MODAL_INGRIDIENT_DATA,
+  fetchIngridients,
+} from "../../services/actions/cart";
+import {
+  Switch,
+  Route,
+  Redirect,
+  useLocation,
+  useHistory,
+} from "react-router-dom";
 import Login from "../../pages/Login/Login";
 import NotFound from "../../pages/NotFound/NotFound";
 import Register from "../../pages/Register/Register";
@@ -17,37 +26,37 @@ import { getUserAction } from "../../services/actions/auth";
 import Modal from "../Modal/Modal";
 
 function App() {
-  const history = useHistory()
+  const history = useHistory();
   const isModalIngridientData = useSelector(
     (state) => state.ingredientDetails.modalIngridientData
   );
   const location = useLocation();
-  let background = location.state && location.state.background;
+  const background = location.state && location.state.background;
   const dispatch = useDispatch();
   const data = useSelector(
     (state) => state.burgerIngredients.burgerIngredients
   );
   const isLoggedIn = useSelector((state) => state.auth.userData);
-  
+
   function checkToken() {
     if (localStorage.getItem("accessToken")) {
       const accessToken = localStorage.getItem("accessToken");
       if (accessToken) {
-        dispatch(getUserAction())
+        dispatch(getUserAction());
       }
     }
   }
 
   useEffect(() => {
     dispatch(fetchIngridients());
-    checkToken()
+    checkToken();
   }, [dispatch]);
 
   if (!data) {
     return <></>;
   }
   function handleClose() {
-    history.goBack()
+    history.goBack();
     dispatch({
       type: CLEAR_MODAL_INGRIDIENT_DATA,
     });
@@ -61,16 +70,32 @@ function App() {
             <Main />
           </Route>
           <Route exact path="/login">
-            {isLoggedIn ? <Redirect to="/" /> : <Login />}
+            {isLoggedIn ? (
+              <Redirect to={location?.state?.from?.pathname || "/"} />
+            ) : (
+              <Login />
+            )}
           </Route>
           <Route exact path="/register">
-            {isLoggedIn ? <Redirect to="/" /> : <Register />}
+            {isLoggedIn ? (
+              <Redirect to={location?.state?.from?.pathname || "/"} />
+            ) : (
+              <Register />
+            )}
           </Route>
           <Route exact path="/forgot-password">
-            {isLoggedIn ? <Redirect to="/" /> : <ForgotPassword />}
+            {isLoggedIn ? (
+              <Redirect to={location?.state?.from?.pathname || "/"} />
+            ) : (
+              <ForgotPassword />
+            )}
           </Route>
           <Route exact path="/reset-password">
-            {isLoggedIn ? <Redirect to="/" /> : <ResetPassword />}
+            {isLoggedIn ? (
+              <Redirect to={location?.state?.from?.pathname || "/"} />
+            ) : (
+              <ResetPassword />
+            )}
           </Route>
           <Route path="/ingredients/:id">
             <IngredientDetails />
@@ -85,9 +110,20 @@ function App() {
           </Route>
         </Switch>
         {isModalIngridientData && (
-        <Modal handleCloseModal={handleClose}><IngredientDetails /></Modal>
-      )}
-        {background && <Route path="/ingredients/:id" children={<Modal handleCloseModal={handleClose}><IngredientDetails /></Modal>} />}
+          <Modal handleCloseModal={handleClose}>
+            <IngredientDetails />
+          </Modal>
+        )}
+        {background && (
+          <Route
+            path="/ingredients/:id"
+            children={
+              <Modal handleCloseModal={handleClose}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+        )}
       </main>
     </div>
   );

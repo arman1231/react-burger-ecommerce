@@ -12,8 +12,6 @@ import { registerAction } from "../../services/actions/auth";
 
 export default function Register() {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const userState = useSelector(state => state.auth.userData)
   const [state, setState] = useState({
     name: "",
     email: "",
@@ -27,19 +25,10 @@ export default function Register() {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("click");
     const { email, password, name } = state;
-    // api.register(email, password, name).then((data) => console.log(data));
-    dispatch(registerAction(email, password, name))
+    dispatch(registerAction(email, password, name));
   }
-  // useEffect(() => {
-  //   if (userState) {
-  //     localStorage.setItem('accessToken', JSON.stringify(userState.accessToken))
-  //     localStorage.setItem('refreshToken', JSON.stringify(userState.refreshToken))
-  //     history.push('/')
-  //   }
-  // }, [userState, history])
-  // console.log(userState);
+
   return (
     <div className={styles.register}>
       <h1 className={`${styles.heading} text text_type_main-medium mb-6`}>
