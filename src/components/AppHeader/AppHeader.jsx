@@ -4,34 +4,41 @@ import {
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector } from "react-redux";
+import { Link, useRouteMatch } from "react-router-dom";
+
 import AppHeaderStyle from "./AppHeader.module.css";
 
 export default function AppHeader() {
+  const isConstructor = !!useRouteMatch({ path: '/', exact: true });
+  const isFeed = !!useRouteMatch({ path: '/feed' });
+  const isProfile = !!useRouteMatch({ path: '/profile' });
+  const userName = useSelector(state => state.auth?.userData?.user?.name) 
   return (
     <header className={`${AppHeaderStyle.header} pt-4 pb-4`}>
       <nav className={AppHeaderStyle.menu}>
         <div className={AppHeaderStyle.menuLeft}>
-          <a className={`${AppHeaderStyle.menuLink} p-5`} href="#">
-            <BurgerIcon type="primary" />{" "}
-            <span className="text text_type_main-default ml-2">
+          <Link className={`${AppHeaderStyle.menuLink} p-5`} to="/">
+            <BurgerIcon type={!isConstructor ? 'secondary' : 'primary'} />{" "}
+            <span className={`text text_type_main-default ml-2 ${!isConstructor && 'text_color_inactive'}`}>
               Конструктор
             </span>
-          </a>
-          <a className={`${AppHeaderStyle.menuLink} ml-2 p-5`} href="#">
-            <ListIcon type="secondary" />{" "}
-            <span className="text text_type_main-default text_color_inactive ml-2">
+          </Link>
+          <Link className={`${AppHeaderStyle.menuLink} ml-2 p-5`} to="#">
+            <ListIcon type={!isFeed ? 'secondary' : 'primary'} />{" "}
+            <span className={`text text_type_main-default ml-2 ${!isFeed && 'text_color_inactive'}`}>
               Лента заказов
             </span>
-          </a>
+          </Link>
         </div>
-        <a className={AppHeaderStyle.logo} href="#"><Logo /></a>
+        <Link className={AppHeaderStyle.logo} to="/"><Logo /></Link>
         <div className={AppHeaderStyle.menuRigth}>
-          <a className={`${AppHeaderStyle.menuLink} p-5`} href="#">
-            <ProfileIcon type="secondary" />
-            <span className="text text_type_main-default text_color_inactive ml-2">
-              Личный кабинет
+          <Link className={`${AppHeaderStyle.menuLink} p-5`} to='/profile'>
+            <ProfileIcon type={!isProfile ? 'secondary' : 'primary'} />
+            <span className={`text text_type_main-default ml-2 ${!isProfile && 'text_color_inactive'}`}>
+              {userName ? userName : 'Личный кабинет'}
             </span>
-          </a>
+          </Link>
         </div>
       </nav>
     </header>

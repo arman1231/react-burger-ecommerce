@@ -19,9 +19,12 @@ import graphics from "../../images/graphics.svg";
 import ConstructorElementWrapper from "../ConstructorElementWrapper/ConstructorElementWrapper";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import Modal from "../Modal/Modal";
+import { useHistory } from "react-router-dom";
 
 export default function BurgerConstructor() {
+  const history = useHistory()
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector(state => state.auth.userData)
   const data = useSelector((state) => state.cart.burgerConstructor);
   const isDisabled = data.bun.length ? false : true;
   const isMakeOrderData = useSelector(
@@ -38,6 +41,10 @@ export default function BurgerConstructor() {
   };
 
   function handleClick() {
+    if (!isLoggedIn) {
+      history.push('/login')
+      return
+    }
     const bunIds = data.bun.map((el) => el._id);
     const ingridientIds = data.ingredients.map((el) => el._id);
 
@@ -162,7 +169,7 @@ export default function BurgerConstructor() {
           htmlType="button"
           disabled={isDisabled}
         >
-          Нажми на меня
+          Оформить заказ
         </Button>
         {isMakeOrdredPending ? <Modal><h1 className="text text_type_main-large p-15">Наши системы регистрируют ваш заказ, ожидайте...</h1></Modal> : ''}
         {isMakeOrderData && <Modal handleCloseModal={closeOrder}><OrderDetails /></Modal>}

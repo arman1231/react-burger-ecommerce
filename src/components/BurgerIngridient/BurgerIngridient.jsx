@@ -10,9 +10,7 @@ import {
   CLEAR_MODAL_INGRIDIENT_DATA,
 } from "../../services/actions/cart";
 import { useDrag } from "react-dnd";
-import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { ingredientType } from '../../utils/types'
-import Modal from "../Modal/Modal";
 
 
 BurgerIngridient.propTypes = {
@@ -34,18 +32,11 @@ export default function BurgerIngridient({
 }) {
   const dispatch = useDispatch();
   const counter = useSelector((state) => state.cart.burgerConstructor);
-  const isModalIngridientData = useSelector(
-    (state) => state.ingredientDetails.modalIngridientData
-  );
+
   function handleClick() {
     dispatch({
       type: ADD_MODAL_INGRIDIENT_DATA,
       payload: { ...el },
-    });
-  }
-  function handleClose() {
-    dispatch({
-      type: CLEAR_MODAL_INGRIDIENT_DATA,
     });
   }
   const [{ isDrag }, dragRef] = useDrag({
@@ -82,9 +73,6 @@ export default function BurgerIngridient({
         </div>
         <h3 className="text text_type_main-default mb-6">{name}</h3>
       </li>
-      {isModalIngridientData && (
-        <Modal handleCloseModal={handleClose}><IngredientDetails /></Modal>
-      )}
     </>
   );
 }

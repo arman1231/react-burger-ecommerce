@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import { authReducer } from './auth'
+import { resetPasswordReducer } from './resetPassword';
 import { GET_BURGER_INGRIDIENTS_PENDING, GET_BURGER_INGRIDIENTS_FULFILED, GET_BURGER_INGRIDIENTS_FAILED, ADD_MODAL_INGRIDIENT_DATA, CLEAR_MODAL_INGRIDIENT_DATA, CLEAR_MODAL_ORDER_DETAILS_DATA, ADD_ITEM_TO_CONSTRUCTOR, REMOVE_ITEM_FROM_CONSTRUCTOR, MOVE_ITEM_IN_CONSTRUCTOR, CLEAR_CONSTRUCTOR, MAKE_ORDER_FULFILED, MAKE_ORDER_PENDING, MAKE_ORDER_FAILED } from '../actions/cart'
 const initialState = {
     burgerConstructor: {
@@ -150,4 +152,6 @@ export const rootReducer = combineReducers({
     burgerIngredients: burgerIngredientsReducer,
     cart: cartReducer,
     orderDetails: orderDetailsReducer,
+    auth: authReducer,
+    reset: resetPasswordReducer,
 });
