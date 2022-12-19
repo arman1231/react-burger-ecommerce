@@ -1,7 +1,9 @@
 import styles from './OrdersFeed.module.css'
 
-export default function OrdersFeed() {
+const OrdersFeed: React.FC = () => {
   return (
     <div className={styles.ordersFeed}>OrdersFeed</div>
   )
 }
+
+export default OrdersFeed;

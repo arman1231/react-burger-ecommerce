@@ -1,7 +1,6 @@
 import {
   Button,
-  EmailInput,
-  PasswordInput,
+  EmailInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ForgotPassword.module.css";
 import { Link, useHistory } from "react-router-dom";
@@ -9,11 +8,11 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { forgotPasswordAction } from "../../services/actions/resetPassword";
 
-export default function ForgotPassword() {
+const ForgotPassword: React.FC = () => {
   const history = useHistory()
-  const dispatch = useDispatch();
-  const isEmailCorrect = useSelector(state => state.reset.data?.success)
-  const [state, setState] = useState({
+  const dispatch: any = useDispatch();
+  const isEmailCorrect = useSelector((state: any) => state.reset.data?.success)
+  const [state, setState] = useState<{ email: string, password: string}>({
     email: "",
     password: ""
   })
@@ -22,13 +21,13 @@ export default function ForgotPassword() {
       history.push('/reset-password')
     }
   }, [isEmailCorrect, history])
-  function handleInputChange(e) {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState({
       ...state,
       [e.target.name]: e.target.value
     })
   }
-  function handleSubmit(e) {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     dispatch(forgotPasswordAction(state.email))
   }
@@ -52,3 +51,4 @@ export default function ForgotPassword() {
     </div>
   );
 }
+export default ForgotPassword;

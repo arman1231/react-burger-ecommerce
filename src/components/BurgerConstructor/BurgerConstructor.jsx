@@ -5,7 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerConstructor.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { useDrop, useDrag } from "react-dnd";
+import { useDrop } from "react-dnd";
 import {
   ADD_ITEM_TO_CONSTRUCTOR,
   REMOVE_ITEM_FROM_CONSTRUCTOR,

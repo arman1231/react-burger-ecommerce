@@ -4,16 +4,18 @@ import {
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { any } from "prop-types";
+import { FC } from "react";
 import { useSelector } from "react-redux";
 import { Link, useRouteMatch } from "react-router-dom";
 
 import AppHeaderStyle from "./AppHeader.module.css";
 
-export default function AppHeader() {
+ const AppHeader: FC = () => {
   const isConstructor = !!useRouteMatch({ path: '/', exact: true });
   const isFeed = !!useRouteMatch({ path: '/feed' });
   const isProfile = !!useRouteMatch({ path: '/profile' });
-  const userName = useSelector(state => state.auth?.userData?.user?.name) 
+  const userName = useSelector((state: any) => state.auth?.userData?.user?.name) 
   return (
     <header className={`${AppHeaderStyle.header} pt-4 pb-4`}>
       <nav className={AppHeaderStyle.menu}>
@@ -44,3 +46,4 @@ export default function AppHeader() {
     </header>
   );
 }
+export default AppHeader;

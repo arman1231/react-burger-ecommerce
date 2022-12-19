@@ -24,19 +24,20 @@ import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { getUserAction } from "../../services/actions/auth";
 import Modal from "../Modal/Modal";
+import * as H from 'history';
 
 function App() {
   const history = useHistory();
   const isModalIngridientData = useSelector(
-    (state) => state.ingredientDetails.modalIngridientData
+    (state: any) => state.ingredientDetails.modalIngridientData
   );
-  const location = useLocation();
+  const location = useLocation<{background: H.Location, from: H.Location}>();
   const background = location.state && location.state.background;
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
   const data = useSelector(
-    (state) => state.burgerIngredients.burgerIngredients
+    (state: any) => state.burgerIngredients.burgerIngredients
   );
-  const isLoggedIn = useSelector((state) => state.auth.userData);
+  const isLoggedIn = useSelector((state: any) => state.auth.userData);
 
   function checkToken() {
     if (localStorage.getItem("accessToken")) {

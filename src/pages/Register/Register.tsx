@@ -2,36 +2,50 @@ import {
   Button,
   EmailInput,
   PasswordInput,
+  Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./Login.module.css";
+import styles from "./Register.module.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { loginAction } from "../../services/actions/auth";
+import { registerAction } from "../../services/actions/auth";
 
-export default function Login() {
-  const dispatch = useDispatch();
-  const [state, setState] = useState({
+const Register: React.FC = () => {
+  const dispatch: any = useDispatch();
+  const [state, setState] = useState<{ name: string, email: string, password: string }>({
+    name: "",
     email: "",
     password: "",
   });
-  function handleInputChange(e) {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState({
       ...state,
       [e.target.name]: e.target.value,
     });
   }
-  function handleSubmit(e) {
-    const { email, password } = state;
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    dispatch(loginAction(email, password));
+    const { email, password, name } = state;
+    dispatch(registerAction(email, password, name));
   }
+
   return (
-    <div className={styles.login}>
+    <div className={styles.register}>
       <h1 className={`${styles.heading} text text_type_main-medium mb-6`}>
-        Вход
+        Регистрация
       </h1>
       <form onSubmit={handleSubmit}>
+        <Input
+          type={"text"}
+          placeholder={"Имя"}
+          onChange={handleInputChange}
+          value={state.name}
+          name={"name"}
+          error={false}
+          errorText={"Ошибка"}
+          size={"default"}
+          extraClass="mb-6"
+        />
         <EmailInput
           onChange={handleInputChange}
           value={state.email}
@@ -52,21 +66,16 @@ export default function Login() {
           size="medium"
           extraClass={`${styles.button}`}
         >
-          Вход
+          Зарегистрироваться
         </Button>
       </form>
       <p className="text text_type_main-default text_color_inactive mb-4">
-        Вы — новый пользователь?{" "}
-        <Link to="/register" className={styles.link}>
-          Зарегистрироваться
-        </Link>
-      </p>
-      <p className="text text_type_main-default text_color_inactive">
-        Забыли пароль?{" "}
-        <Link to="/forgot-password" className={styles.link}>
-          Восстановить пароль
+        Уже зарегистрированы?{" "}
+        <Link to="/login" className={styles.link}>
+          Войти
         </Link>
       </p>
     </div>
   );
 }
+export default Register;

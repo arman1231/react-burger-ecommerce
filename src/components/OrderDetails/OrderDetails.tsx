@@ -2,8 +2,8 @@ import doneSvg from "../../images/graphics.svg";
 import styles from "./OrderDetails.module.css";
 import { useSelector } from 'react-redux';
 
-export default function OrderDetails() {
-  const orderDetailsData = useSelector(state => state.orderDetails.orderDetailsData)
+const OrderDetails: React.FC = () => {
+  const orderDetailsData = useSelector((state: any) => state.orderDetails.orderDetailsData)
   return (
       <div className={styles.orderDetails}>
         <p className={`${styles.glow} text text_type_digits-large pt-30 mb-8`}>{orderDetailsData.order && orderDetailsData.order.number}</p>
@@ -16,3 +16,4 @@ export default function OrderDetails() {
       </div>
   );
 }
+export default OrderDetails;

@@ -1,6 +1,12 @@
+import { FC, ReactElement } from "react";
 import { Route, Redirect, useLocation } from "react-router-dom";
+interface IProtectedRoute {
+  component: FC<any>;
+  isLoggedIn: boolean;
+  path: string;
+}
 
-export default function ProtectedRoute({ component: Component, ...props }) {
+ const ProtectedRoute: FC<IProtectedRoute> = ({ component: Component, ...props }) => {
   const location = useLocation();
   return (
     <Route>
@@ -14,3 +20,4 @@ export default function ProtectedRoute({ component: Component, ...props }) {
     </Route>
   );
 }
+export default ProtectedRoute;

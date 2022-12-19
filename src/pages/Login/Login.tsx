@@ -2,50 +2,36 @@ import {
   Button,
   EmailInput,
   PasswordInput,
-  Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./Register.module.css";
-import { Link, useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { registerAction } from "../../services/actions/auth";
+import styles from "./Login.module.css";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginAction } from "../../services/actions/auth";
 
-export default function Register() {
-  const dispatch = useDispatch();
-  const [state, setState] = useState({
-    name: "",
+const Login: React.FC = () => {
+  const dispatch: any = useDispatch();
+  const [state, setState] = useState<{ email: string, password: string }>({
     email: "",
     password: "",
   });
-  function handleInputChange(e) {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState({
       ...state,
       [e.target.name]: e.target.value,
     });
   }
-  function handleSubmit(e) {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    const { email, password } = state;
     e.preventDefault();
-    const { email, password, name } = state;
-    dispatch(registerAction(email, password, name));
+    dispatch(loginAction(email, password));
   }
-
   return (
-    <div className={styles.register}>
+    <div className={styles.login}>
       <h1 className={`${styles.heading} text text_type_main-medium mb-6`}>
-        Регистрация
+        Вход
       </h1>
       <form onSubmit={handleSubmit}>
-        <Input
-          type={"text"}
-          placeholder={"Имя"}
-          onChange={handleInputChange}
-          value={state.name}
-          name={"name"}
-          error={false}
-          errorText={"Ошибка"}
-          size={"default"}
-          extraClass="mb-6"
-        />
         <EmailInput
           onChange={handleInputChange}
           value={state.email}
@@ -66,15 +52,22 @@ export default function Register() {
           size="medium"
           extraClass={`${styles.button}`}
         >
-          Зарегистрироваться
+          Вход
         </Button>
       </form>
       <p className="text text_type_main-default text_color_inactive mb-4">
-        Уже зарегистрированы?{" "}
-        <Link to="/login" className={styles.link}>
-          Войти
+        Вы — новый пользователь?{" "}
+        <Link to="/register" className={styles.link}>
+          Зарегистрироваться
+        </Link>
+      </p>
+      <p className="text text_type_main-default text_color_inactive">
+        Забыли пароль?{" "}
+        <Link to="/forgot-password" className={styles.link}>
+          Восстановить пароль
         </Link>
       </p>
     </div>
   );
 }
+export default Login;
