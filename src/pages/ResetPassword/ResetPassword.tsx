@@ -9,12 +9,13 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPasswordAction } from "../../services/actions/resetPassword";
 
+
 const ResetPassword = () => {
   const history = useHistory()
   const dispatch: any = useDispatch();
   const isSuccess = useSelector((state: any) => state.reset.data?.message)
   const isResetPassowrdRequested = useSelector((state: any) => state.reset.isResetPassowrdRequested);
-  const [state, setState] = useState<{code: string, password: string}>({
+  const [state, setState] = useState<{ code: string, password: string }>({
     code: "",
     password: "",
   });
@@ -43,24 +44,24 @@ const ResetPassword = () => {
         Восстановление пароля
       </h1>
       <form onSubmit={handleSubmit}>
-      <PasswordInput
+        <PasswordInput
           onChange={handleInputChange}
           value={state.password}
           name={"password"}
           extraClass="mb-6"
           placeholder="Введите новый пароль"
         />
-              <Input
-      type={'text'}
-      placeholder={'Введите код из письма'}
-      onChange={handleInputChange}
-      value={state.code}
-      name={'code'}
-      error={false}
-      errorText={'Ошибка'}
-      size={'default'}
-      extraClass="mb-6"
-    />
+        <Input
+          type={'text'}
+          placeholder={'Введите код из письма'}
+          onChange={handleInputChange}
+          value={state.code}
+          name={'code'}
+          error={false}
+          errorText={'Ошибка'}
+          size={'default'}
+          extraClass="mb-6"
+        />
         <Button
           disabled={!(state.password.length > 0)}
           htmlType="submit"

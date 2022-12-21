@@ -4,34 +4,27 @@ import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import {
   ADD_MODAL_INGRIDIENT_DATA,
-  CLEAR_MODAL_INGRIDIENT_DATA,
 } from "../../services/actions/cart";
 import { useDrag } from "react-dnd";
-import { ingredientType } from '../../utils/types'
+import { IIngridient } from '../../utils/types'
 
 
-BurgerIngridient.propTypes = {
-  image: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  _id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  el: ingredientType.isRequired,
-};
+interface IBurgerIngridientProps extends IIngridient {
+  el: IIngridient;
+}
 
-export default function BurgerIngridient({
+const BurgerIngridient: React.FC<IBurgerIngridientProps> = ({
   image,
   price,
   name,
-  el,
   _id,
   type,
-}) {
-  const dispatch = useDispatch();
-  const counter = useSelector((state) => state.cart.burgerConstructor);
+  el,
+}) => {
+  const dispatch: any = useDispatch();
+  const counter = useSelector((state: any) => state.cart.burgerConstructor);
 
   function handleClick() {
     dispatch({
@@ -55,11 +48,11 @@ export default function BurgerIngridient({
       >
         <img className={BurgerIngredientStyles.image} src={image} alt={name} />
         <Counter
-          className={BurgerIngredientStyles.counter}
+          extraClass={BurgerIngredientStyles.counter}
           count={
             type === "bun"
-              ? counter.bun.filter((el) => el._id === _id).length * 2
-              : counter.ingredients.filter((el) => el._id === _id).length
+              ? counter.bun.filter((el: IIngridient) => el._id === _id).length * 2
+              : counter.ingredients.filter((el: IIngridient) => el._id === _id).length
           }
           size="default"
         />
@@ -76,3 +69,4 @@ export default function BurgerIngridient({
     </>
   );
 }
+export default BurgerIngridient;

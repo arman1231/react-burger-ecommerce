@@ -5,28 +5,14 @@ import BurgerIngredientsStyles from "./BurgerIngredients.module.css";
 import { useSelector } from "react-redux";
 import { useInView } from "react-intersection-observer";
 import { Link, useLocation } from "react-router-dom";
-
-interface IIngridient {
-  calories: number,
-  carbohydrates: number,
-  fat: number,
-  image: string,
-  image_large: string,
-  image_mobile: string,
-  name: string,
-  price: number,
-  proteins: number,
-  type: string,
-  __v: number,
-  _id: string
-}
+import { IIngridient } from "../../utils/types";
 
 const BurgerIngredients: React.FC = () => {
   let location = useLocation();
   const data = useSelector(
     (state: any) => state.burgerIngredients.burgerIngredients
   );
-  const rootScroll = useRef();
+  const rootScroll = useRef<HTMLDivElement | null>(null);
 
   const FIRST_TAB = "Булки";
   const SECOND_TAB = "Соусы";

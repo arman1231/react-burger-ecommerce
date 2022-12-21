@@ -1,12 +1,13 @@
-import { FC, ReactElement } from "react";
+import { FC } from "react";
 import { Route, Redirect, useLocation } from "react-router-dom";
-interface IProtectedRoute {
-  component: FC<any>;
+
+type TProtectedRoute = {
+  component: FC<Omit<TProtectedRoute, "component">>;
   isLoggedIn: boolean;
   path: string;
 }
 
- const ProtectedRoute: FC<IProtectedRoute> = ({ component: Component, ...props }) => {
+const ProtectedRoute: FC<TProtectedRoute> = ({ component: Component, ...props }) => {
   const location = useLocation();
   return (
     <Route>

@@ -20,18 +20,22 @@ import ConstructorElementWrapper from "../ConstructorElementWrapper/ConstructorE
 import OrderDetails from "../OrderDetails/OrderDetails";
 import Modal from "../Modal/Modal";
 import { useHistory } from "react-router-dom";
+import { IIngridient } from "../../utils/types";
 
+export interface IBurgerConstructorIngridient extends IIngridient {
+  id: string;
+}
 export default function BurgerConstructor() {
   const history = useHistory()
-  const dispatch = useDispatch();
-  const isLoggedIn = useSelector(state => state.auth.userData)
-  const data = useSelector((state) => state.cart.burgerConstructor);
+  const dispatch: any = useDispatch();
+  const isLoggedIn = useSelector((state: any) => state.auth.userData)
+  const data = useSelector((state: any) => state.cart.burgerConstructor);
   const isDisabled = data.bun.length ? false : true;
   const isMakeOrderData = useSelector(
-    (state) => state.orderDetails.orderDetailsData
+    (state: any) => state.orderDetails.orderDetailsData
   );
   const isMakeOrdredPending = useSelector(
-    (state) => state.orderDetails.orderDetailsDataPending
+    (state: any) => state.orderDetails.orderDetailsDataPending
   );
   const closeOrder = () => {
     dispatch({ type: CLEAR_MODAL_ORDER_DETAILS_DATA });
@@ -45,14 +49,14 @@ export default function BurgerConstructor() {
       history.push('/login')
       return
     }
-    const bunIds = data.bun.map((el) => el._id);
-    const ingridientIds = data.ingredients.map((el) => el._id);
+    const bunIds = data.bun.map((el: IBurgerConstructorIngridient) => el._id);
+    const ingridientIds = data.ingredients.map((el: IBurgerConstructorIngridient) => el._id);
 
     dispatch(makeOrderAction([...bunIds, ...ingridientIds]));
   }
   const [{ isHover }, dropBun] = useDrop({
     accept: "bun",
-    drop(item) {
+    drop(item: IIngridient) {
       dispatch({
         type: ADD_ITEM_TO_CONSTRUCTOR,
         payload: { ...item, id: uuidv4() },
@@ -62,13 +66,13 @@ export default function BurgerConstructor() {
       isHover: monitor.isOver(),
     }),
   });
-  function handleDeleteElement(id) {
+  function handleDeleteElement(id: string) {
     dispatch({
       type: REMOVE_ITEM_FROM_CONSTRUCTOR,
       id: id,
     });
   }
-  const moveCard = (dragIndex, hoverIndex) => {
+  const moveCard = (dragIndex: number, hoverIndex: number) => {
     dispatch({
       type: MOVE_ITEM_IN_CONSTRUCTOR,
       dragIndex,
@@ -82,7 +86,7 @@ export default function BurgerConstructor() {
           <>
             {data &&
               data.bun.map(
-                (el, i) =>
+                (el: IBurgerConstructorIngridient, i: number) =>
                   i === 0 && (
                     <ConstructorElement
                       key={el.id}
@@ -97,9 +101,9 @@ export default function BurgerConstructor() {
               )}
             <div className={styles.scrollable}>
               {data &&
-                data.ingredients.map((el, i) => (
+                data.ingredients.map((el: IBurgerConstructorIngridient, i: number) => (
                   <ConstructorElementWrapper
-                    {...el}
+                    item={el}
                     index={i}
                     handleDeleteElement={handleDeleteElement}
                     moveCard={moveCard}
@@ -109,7 +113,7 @@ export default function BurgerConstructor() {
             </div>
             {data &&
               data.bun.map(
-                (el, i) =>
+                (el: IBurgerConstructorIngridient, i: number) =>
                   i === 0 && (
                     <ConstructorElement
                       key={el.id}
@@ -130,21 +134,21 @@ export default function BurgerConstructor() {
               type="top"
               isLocked={true}
               text={`сначала выберите булочку`}
-              thumbnail={graphics}
-            />
+              thumbnail={graphics} 
+              price={0} />
             <ConstructorElement
               extraClass="ml-6"
               isLocked={true}
               text={`перетащите ингридиент`}
-              thumbnail={graphics}
-            />
+              thumbnail={graphics} 
+              price={0} />
             <ConstructorElement
               extraClass="ml-6"
               type="bottom"
               isLocked={true}
               text={`сначала выберите булочку`}
-              thumbnail={graphics}
-            />
+              thumbnail={graphics} 
+              price={0} />
           </>
         )}
       </div>
@@ -153,13 +157,13 @@ export default function BurgerConstructor() {
           <span className={`${styles.price} text text_type_digits-medium`}>
             {data.bun[0]
               ? data &&
-                data.ingredients.reduce((acc, prev) => {
-                  return acc + prev.price;
-                }, 0) +
-                  data?.bun[0]?.price * 2
+              data.ingredients.reduce((acc: number, prev: IBurgerConstructorIngridient) => {
+                return acc + prev.price;
+              }, 0) +
+              data?.bun[0]?.price * 2
               : 0}
           </span>
-          <CurrencyIcon className="pr-2" type="primary" />
+          <CurrencyIcon type="primary" />
         </div>
 
         <Button
@@ -171,7 +175,7 @@ export default function BurgerConstructor() {
         >
           Оформить заказ
         </Button>
-        {isMakeOrdredPending ? <Modal><h1 className="text text_type_main-large p-15">Наши системы регистрируют ваш заказ, ожидайте...</h1></Modal> : ''}
+        {isMakeOrdredPending ? <Modal handleCloseModal={() => {}}><h1 className="text text_type_main-large p-15">Наши системы регистрируют ваш заказ, ожидайте...</h1></Modal> : ''}
         {isMakeOrderData && <Modal handleCloseModal={closeOrder}><OrderDetails /></Modal>}
       </section>
     </>

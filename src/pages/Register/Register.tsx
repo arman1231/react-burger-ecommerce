@@ -9,10 +9,11 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerAction } from "../../services/actions/auth";
+import { TUser } from "../../utils/types";
 
 const Register: React.FC = () => {
   const dispatch: any = useDispatch();
-  const [state, setState] = useState<{ name: string, email: string, password: string }>({
+  const [state, setState] = useState<TUser>({
     name: "",
     email: "",
     password: "",

@@ -4,7 +4,6 @@ import {
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { any } from "prop-types";
 import { FC } from "react";
 import { useSelector } from "react-redux";
 import { Link, useRouteMatch } from "react-router-dom";

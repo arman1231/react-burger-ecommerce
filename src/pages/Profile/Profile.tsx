@@ -10,12 +10,13 @@ import { NavLink, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction, updateUserAction } from "../../services/actions/auth";
 import OrdersFeed from "../../components/OrdersFeed/OrdersFeed";
+import { TUser } from "../../utils/types";
 
 const Profile: React.FC = () => {
   const dispatch: any = useDispatch();
   const { name, email } = useSelector((state: any) => state.auth.userData.user);
   const [isChange, setIsChange] = useState(false);
-  const [state, setState] = useState<{ name: string, email: string, password: string }>({
+  const [state, setState] = useState<TUser>({
     name: name,
     email: email,
     password: "",

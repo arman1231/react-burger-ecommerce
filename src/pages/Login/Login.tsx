@@ -8,10 +8,11 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginAction } from "../../services/actions/auth";
+import { TUser } from "../../utils/types";
 
 const Login: React.FC = () => {
   const dispatch: any = useDispatch();
-  const [state, setState] = useState<{ email: string, password: string }>({
+  const [state, setState] = useState<Omit<TUser, "name">>({
     email: "",
     password: "",
   });
