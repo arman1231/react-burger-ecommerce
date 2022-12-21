@@ -30,7 +30,7 @@ const Profile: React.FC = () => {
   }
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    dispatch(updateUserAction(state.email, state.password, state.name));
+    dispatch(updateUserAction(state));
   }
   const handleLogout: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
     e.preventDefault();

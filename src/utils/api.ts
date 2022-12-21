@@ -94,13 +94,24 @@ async fetchWithRefresh<T>(url: string, options: RequestInit): Promise<T> {
     })
   }
 
-  register(email: string, password: string, name: string) {
+  // register(email: string, password: string, name: string) {
+  //   return fetch(`${this._baseUrl}/api/auth/register`, {
+  //     headers: {
+  //       "Content-Type": "application/json;charset=utf-8",
+  //     },
+  //     method: "POST",
+  //     body: JSON.stringify({ email, password, name }),
+  //     // credentials: 'include',
+  //   }).then(res => this._checkResponse<TAuthResponse>(res));
+  // }
+
+  register(user: TUser) {
     return fetch(`${this._baseUrl}/api/auth/register`, {
       headers: {
         "Content-Type": "application/json;charset=utf-8",
       },
       method: "POST",
-      body: JSON.stringify({ email, password, name }),
+      body: JSON.stringify(user),
       // credentials: 'include',
     }).then(res => this._checkResponse<TAuthResponse>(res));
   }
@@ -146,7 +157,7 @@ async fetchWithRefresh<T>(url: string, options: RequestInit): Promise<T> {
     })
   }
 
-  updateUser(email: string, password: string, name: string) {
+  updateUser(user: TUser) {
     return this.fetchWithRefresh(`${BASE_URL}/api/auth/user`, {
       method: "PATCH",
       headers: {
@@ -154,7 +165,7 @@ async fetchWithRefresh<T>(url: string, options: RequestInit): Promise<T> {
         "Content-Type": "application/json",
         authorization: localStorage.getItem("accessToken")!,
       },
-      body: JSON.stringify({ email, password, name }),
+      body: JSON.stringify(user),
     })
   }
 
