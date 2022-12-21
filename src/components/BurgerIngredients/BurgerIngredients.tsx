@@ -5,16 +5,18 @@ import BurgerIngredientsStyles from "./BurgerIngredients.module.css";
 import { useSelector } from "react-redux";
 import { useInView } from "react-intersection-observer";
 import { Link, useLocation } from "react-router-dom";
+import { IIngridient } from "../../utils/types";
 
-export default function BurgerIngredients() {
+const BurgerIngredients: React.FC = () => {
   let location = useLocation();
   const data = useSelector(
-    (state) => state.burgerIngredients.burgerIngredients
+    (state: any) => state.burgerIngredients.burgerIngredients
   );
+  const rootScroll = useRef<HTMLDivElement | null>(null);
+
   const FIRST_TAB = "Булки";
   const SECOND_TAB = "Соусы";
   const THIRD_TAB = "Начинки";
-  const rootScroll = useRef();
 
   const [ref, inView] = useInView({
     root: rootScroll.current,
@@ -32,13 +34,19 @@ export default function BurgerIngredients() {
   return (
     <>
       <div className={BurgerIngredientsStyles.tabControls}>
-        <Tab value={FIRST_TAB} active={inView}>
+        <Tab value={FIRST_TAB} active={inView} onClick={function (value: string): void {
+          throw new Error("Function not implemented.");
+        } }>
           Булки
         </Tab>
-        <Tab value={SECOND_TAB} active={inView2}>
+        <Tab value={SECOND_TAB} active={inView2} onClick={function (value: string): void {
+          throw new Error("Function not implemented.");
+        } }>
           Соусы
         </Tab>
-        <Tab value={THIRD_TAB} active={inView3}>
+        <Tab value={THIRD_TAB} active={inView3} onClick={function (value: string): void {
+          throw new Error("Function not implemented.");
+        } }>
           Начинки
         </Tab>
       </div>
@@ -47,8 +55,8 @@ export default function BurgerIngredients() {
           <h2 className="text text_type_main-medium pt-10 pb-6">Булки</h2>
           <ul className={BurgerIngredientsStyles.list}>
             {data
-              .filter((el) => el.type === "bun")
-              .map((el) => (
+              .filter((el: IIngridient) => el.type === "bun")
+              .map((el: IIngridient) => (
                 <Link
                   className={BurgerIngredientsStyles.link}
                   key={el._id}
@@ -72,8 +80,8 @@ export default function BurgerIngredients() {
           <h2 className="text text_type_main-medium pt-10 pb-6">Соусы</h2>
           <ul className={BurgerIngredientsStyles.list}>
             {data
-              .filter((el) => el.type === "sauce")
-              .map((el) => (
+              .filter((el: IIngridient) => el.type === "sauce")
+              .map((el: IIngridient) => (
                 <Link
                   className={BurgerIngredientsStyles.link}
                   key={el._id}
@@ -93,8 +101,8 @@ export default function BurgerIngredients() {
           <h2 className="text text_type_main-medium pt-10 pb-6">Начинки</h2>
           <ul className={BurgerIngredientsStyles.list}>
             {data
-              .filter((el) => el.type === "main")
-              .map((el) => (
+              .filter((el: IIngridient) => el.type === "main")
+              .map((el: IIngridient) => (
                 <Link
                   className={BurgerIngredientsStyles.link}
                   key={el._id}
@@ -114,3 +122,4 @@ export default function BurgerIngredients() {
     </>
   );
 }
+export default BurgerIngredients;

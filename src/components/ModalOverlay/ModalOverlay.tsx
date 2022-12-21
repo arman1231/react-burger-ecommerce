@@ -1,29 +1,28 @@
 import React, { useEffect } from "react";
 import styles from "./ModalOverlay.module.css";
-import PropTypes from "prop-types";
 
-ModalOverlay.propTypes = {
-    handleCloseModal: PropTypes.func,
-  };
+interface IModalOverlay {
+  handleCloseModal: () => void
+}
 
-export default function ModalOverlay({ handleCloseModal }) {
-  function closeOnOverlay(e) {
+export const ModalOverlay: React.FC<IModalOverlay> = ({ handleCloseModal }) => {
+  const closeOnOverlay: React.MouseEventHandler<HTMLDivElement> = (e) => {
     if (e.currentTarget === e.target) {
       handleCloseModal();
     }
   }
-  function handleEscClose(e) {
+  const handleEscClose: (this: Window, e: KeyboardEvent) => void = (e) => {
     if (e.key === "Escape") {
-        handleCloseModal();
+      handleCloseModal();
     }
   }
   useEffect(() => {
     window.addEventListener('keydown', handleEscClose)
     return () => {
-        window.removeEventListener('keydown', handleEscClose)
+      window.removeEventListener('keydown', handleEscClose)
     }
   }, [])
-  
+
   return (
     <div
       onClick={closeOnOverlay}
@@ -31,3 +30,4 @@ export default function ModalOverlay({ handleCloseModal }) {
     ></div>
   );
 }
+export default ModalOverlay;

@@ -8,20 +8,21 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginAction } from "../../services/actions/auth";
+import { TUser } from "../../utils/types";
 
-export default function Login() {
-  const dispatch = useDispatch();
-  const [state, setState] = useState({
+const Login: React.FC = () => {
+  const dispatch: any = useDispatch();
+  const [state, setState] = useState<Omit<TUser, "name">>({
     email: "",
     password: "",
   });
-  function handleInputChange(e) {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState({
       ...state,
       [e.target.name]: e.target.value,
     });
   }
-  function handleSubmit(e) {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     const { email, password } = state;
     e.preventDefault();
     dispatch(loginAction(email, password));
@@ -70,3 +71,4 @@ export default function Login() {
     </div>
   );
 }
+export default Login;

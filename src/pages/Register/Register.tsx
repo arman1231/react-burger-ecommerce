@@ -5,28 +5,29 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./Register.module.css";
-import { Link, useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { registerAction } from "../../services/actions/auth";
+import { TUser } from "../../utils/types";
 
-export default function Register() {
-  const dispatch = useDispatch();
-  const [state, setState] = useState({
+const Register: React.FC = () => {
+  const dispatch: any = useDispatch();
+  const [state, setState] = useState<TUser>({
     name: "",
     email: "",
     password: "",
   });
-  function handleInputChange(e) {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState({
       ...state,
       [e.target.name]: e.target.value,
     });
   }
-  function handleSubmit(e) {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const { email, password, name } = state;
-    dispatch(registerAction(email, password, name));
+    dispatch(registerAction(state));
   }
 
   return (
@@ -78,3 +79,4 @@ export default function Register() {
     </div>
   );
 }
+export default Register;

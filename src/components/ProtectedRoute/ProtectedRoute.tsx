@@ -1,6 +1,13 @@
+import { FC } from "react";
 import { Route, Redirect, useLocation } from "react-router-dom";
 
-export default function ProtectedRoute({ component: Component, ...props }) {
+type TProtectedRoute = {
+  component: FC<Omit<TProtectedRoute, "component">>;
+  isLoggedIn: boolean;
+  path: string;
+}
+
+const ProtectedRoute: FC<TProtectedRoute> = ({ component: Component, ...props }) => {
   const location = useLocation();
   return (
     <Route>
@@ -14,3 +21,4 @@ export default function ProtectedRoute({ component: Component, ...props }) {
     </Route>
   );
 }
+export default ProtectedRoute;

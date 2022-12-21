@@ -5,37 +5,38 @@ import {
   PasswordInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { NavLink, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction, updateUserAction } from "../../services/actions/auth";
 import OrdersFeed from "../../components/OrdersFeed/OrdersFeed";
+import { TUser } from "../../utils/types";
 
-export default function Profile() {
-  const dispatch = useDispatch();
-  const { name, email } = useSelector((state) => state.auth.userData.user);
+const Profile: React.FC = () => {
+  const dispatch: any = useDispatch();
+  const { name, email } = useSelector((state: any) => state.auth.userData.user);
   const [isChange, setIsChange] = useState(false);
-  const [state, setState] = useState({
+  const [state, setState] = useState<TUser>({
     name: name,
     email: email,
     password: "",
   });
-  function handleInputChange(e) {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsChange(true);
     setState({
       ...state,
       [e.target.name]: e.target.value,
     });
   }
-  function handleSubmit(e) {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    dispatch(updateUserAction(state.email, state.password, state.name));
+    dispatch(updateUserAction(state));
   }
-  function handleLogout(e) {
+  const handleLogout: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
     e.preventDefault();
     dispatch(logoutAction());
   }
-  function cancelChanges(e) {
+  const cancelChanges = (e: React.SyntheticEvent<Element, Event>) => {
     e.preventDefault();
     setState({
       name: name,
@@ -103,11 +104,10 @@ export default function Profile() {
               extraClass="mb-6"
             />
             <EmailInput
-              icon={"EditIcon"}
               onChange={handleInputChange}
               value={state.email}
               name={"email"}
-              isIcon={false}
+              isIcon={true}
               extraClass="mb-6"
             />
             <PasswordInput
@@ -149,3 +149,4 @@ export default function Profile() {
     </div>
   );
 }
+export default Profile;

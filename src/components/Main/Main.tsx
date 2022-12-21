@@ -4,7 +4,6 @@ import MainStyles from "./Main.module.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-
 export default function Main() {
   return (
     <DndProvider backend={HTML5Backend}>
