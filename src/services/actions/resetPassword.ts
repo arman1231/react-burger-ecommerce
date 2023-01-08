@@ -1,4 +1,5 @@
-import { api } from "../../utils/api";
+import { api, TSuccessResponse } from "../../utils/api";
+import { AppDispatch, AppThunk } from "../../utils/types";
 export const FORGOT_PASSWORD_PENDING: 'FORGOT_PASSWORD_PENDING' = 'FORGOT_PASSWORD_PENDING';
 export const FORGOT_PASSWORD_FULFILED: 'FORGOT_PASSWORD_FULFILED' = 'FORGOT_PASSWORD_FULFILED';
 export const FORGOT_PASSWORD_FAILED: 'FORGOT_PASSWORD_FAILED' = 'FORGOT_PASSWORD_FAILED';
@@ -12,7 +13,7 @@ export interface IForgotPasswordPendingAction {
 
 export interface IForgotPasswordFulfiledAction {
     readonly type: typeof FORGOT_PASSWORD_FULFILED;
-    payload: string | null;
+    payload: TSuccessResponse | null;
 }
 
 export interface IForgotPasswordFailedAction {
@@ -26,7 +27,7 @@ export interface IResetPasswordPendingAction {
 
 export interface IResetPasswordFulfuledAction {
     readonly type: typeof RESET_PASSWORD_FULFILED;
-    payload: string | null;
+    payload: TSuccessResponse | null;
 }
 
 export interface IResetPasswordFailedAction {
@@ -40,7 +41,7 @@ export const forgotPasswordPendingAction = (): IForgotPasswordPendingAction => (
     type: FORGOT_PASSWORD_PENDING
 });
 
-export const forgotPasswordFulfiledAction = (payload: string): IForgotPasswordFulfiledAction => ({
+export const forgotPasswordFulfiledAction = (payload: TSuccessResponse | null): IForgotPasswordFulfiledAction => ({
     type: FORGOT_PASSWORD_FULFILED,
     payload
 });
@@ -54,7 +55,7 @@ export const resetPasswordPendingAction = (): IResetPasswordPendingAction => ({
     type: RESET_PASSWORD_PENDING
 });
 
-export const resetPasswordFulfuledAction = (payload: string): IResetPasswordFulfuledAction => ({
+export const resetPasswordFulfuledAction = (payload: TSuccessResponse | null): IResetPasswordFulfuledAction => ({
     type: RESET_PASSWORD_FULFILED,
     payload
 });
@@ -64,8 +65,8 @@ export const resetPasswordFailedAction = (payload: string): IResetPasswordFailed
     payload
 });
 
-export const forgotPasswordAction = (email:any) => {
-    return function (dispatch: any) {
+export const forgotPasswordAction: AppThunk = (email:string) => {
+    return function (dispatch: AppDispatch) {
         dispatch({
             type: FORGOT_PASSWORD_PENDING
         })
@@ -87,8 +88,8 @@ export const forgotPasswordAction = (email:any) => {
     }
 }
 
-export const resetPasswordAction = (password: any, token: any) => {
-    return function (dispatch: any) {
+export const resetPasswordAction: AppThunk = (password: string, token: string) => {
+    return function (dispatch: AppDispatch) {
         dispatch({
             type: RESET_PASSWORD_PENDING
         })

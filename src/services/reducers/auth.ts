@@ -1,10 +1,11 @@
+import { TUserResponse } from '../../utils/api';
 import { TRegisterResponse } from '../../utils/types';
 import { REGISTER_PENDING, REGISTER_FULFILED, REGISTER_FAILED, LOGIN_PENDING, LOGIN_FULFILED, LOGIN_FAILED, LOGOUT_PENDING, LOGOUT_FULFILED, LOGOUT_FAILED, CLEAR_LOCALSTORAGE, SET_TOKEN, GET_USER_PENDING, GET_USER_FULFILED, GET_USER_FAILED, UPDATE_USER_PENDING, UPDATE_USER_FULFILED, UPDATE_USER_FAILED, TAuthActions } from '../actions/auth';
 
 export type TAuthState = {
     isAuthChecked: boolean;
 
-    userData: null | TRegisterResponse;
+    userData: null | TRegisterResponse | TUserResponse;
   
     registerUserError: null | string;
     registerUserPending: boolean;

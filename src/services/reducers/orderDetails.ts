@@ -1,8 +1,8 @@
-import { TMakeOrderResponse } from "../../utils/types";
+import { TOrderResponse } from "../../utils/api";
 import { CLEAR_MODAL_ORDER_DETAILS_DATA, MAKE_ORDER_FAILED, MAKE_ORDER_FULFILED, MAKE_ORDER_PENDING, TOrderDetailsActions } from "../actions/orderDetails";
 
 export type TOrderDetailsState = {
-    orderDetailsData: TMakeOrderResponse | null,
+    orderDetailsData: TOrderResponse | null,
     orderDetailsDataPending: boolean,
     orderDetailsDataFailed: string | null,
 }

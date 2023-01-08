@@ -1,5 +1,5 @@
-import { api } from "../../utils/api";
-import { TMakeOrderResponse } from "../../utils/types";
+import { api, TOrderResponse } from "../../utils/api";
+import { AppDispatch, AppThunk } from "../../utils/types";
 
 export const MAKE_ORDER_PENDING: 'MAKE_ORDER_PENDING' = "MAKE_ORDER_PENDING";
 export const MAKE_ORDER_FULFILED: 'MAKE_ORDER_FULFILED' = "MAKE_ORDER_FULFILED";
@@ -16,7 +16,7 @@ export interface IClearModalOrderDetailsDataAction {
   
   export interface IMakeOrderFulfiledAction {
     readonly type: typeof MAKE_ORDER_FULFILED;
-    payload: TMakeOrderResponse | null;
+    payload: TOrderResponse | null;
   }
   
   export interface IMakeOrderFailedAction {
@@ -34,7 +34,7 @@ export interface IClearModalOrderDetailsDataAction {
     type: MAKE_ORDER_PENDING
   })
   
-  export const makeOrderFulfiledAction = (payload: TMakeOrderResponse | null): IMakeOrderFulfiledAction => ({
+  export const makeOrderFulfiledAction = (payload: TOrderResponse | null): IMakeOrderFulfiledAction => ({
     type: MAKE_ORDER_FULFILED,
     payload
   })
@@ -44,8 +44,8 @@ export interface IClearModalOrderDetailsDataAction {
     payload
   })
 
-  export const makeOrderAction = (data: any) => {
-    return function (dispatch: any) {
+  export const makeOrderAction: AppThunk = (data: any) => {
+    return function (dispatch: AppDispatch) {
       dispatch({
         type: MAKE_ORDER_PENDING,
       });

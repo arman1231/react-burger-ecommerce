@@ -1,4 +1,4 @@
-import { api } from "../../utils/api";
+import { api, TUserResponse } from "../../utils/api";
 import { AppDispatch, AppThunk, TRegisterResponse, TSuccessResponse } from "../../utils/types";
 export const REGISTER_PENDING: 'REGISTER_PENDING' = "REGISTER_PENDING";
 export const REGISTER_FULFILED: 'REGISTER_FULFILED' = "REGISTER_FULFILED";
@@ -74,7 +74,7 @@ export interface IGetUserPendingAction {
 
 export interface IGetUserFulfiledAction {
   readonly type: typeof GET_USER_FULFILED;
-  payload: TRegisterResponse | null;
+  payload: TUserResponse | null;
 }
 
 export interface IGetUserFailedAction {
@@ -88,7 +88,7 @@ export interface IUpdateUserPendingAction {
 
 export interface IUpdateUserFulfiledAction {
   readonly type: typeof UPDATE_USER_FULFILED;
-  payload: TRegisterResponse | null;
+  payload: TUserResponse | null;
 }
 
 export interface IUpdateUserFailedAction {
@@ -152,7 +152,7 @@ export const getUserPendingAction = (): IGetUserPendingAction => ({
   type: GET_USER_PENDING
 })
 
-export const getUserFulfiledAction = (payload: TRegisterResponse | null): IGetUserFulfiledAction => ({
+export const getUserFulfiledAction = (payload: TUserResponse | null): IGetUserFulfiledAction => ({
   type: GET_USER_FULFILED,
   payload
 })
@@ -166,7 +166,7 @@ export const updateUserPendingAction = (): IUpdateUserPendingAction => ({
   type: UPDATE_USER_PENDING
 })
 
-export const updateUserFulfiledAction = (payload: TRegisterResponse | null): IUpdateUserFulfiledAction => ({
+export const updateUserFulfiledAction = (payload: TUserResponse | null): IUpdateUserFulfiledAction => ({
   type: UPDATE_USER_FULFILED,
   payload
 })
@@ -281,8 +281,8 @@ export const getUserAction: AppThunk = () => {
   };
 };
 
-export const updateUserAction = (email: string, password: string, name: string) => {
-    return function (dispatch: any) {
+export const updateUserAction: AppThunk = (email: string, password: string, name: string) => {
+    return function (dispatch: AppDispatch) {
         dispatch({
             type: UPDATE_USER_PENDING
         })

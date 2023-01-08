@@ -1,34 +1,37 @@
 import { BASE_URL } from "./constants";
 import { IIngridient, TUser } from "./types";
 
-type TApiConfig = {
+export type TApiConfig = {
   baseUrl: string
 }
 
-type TError = {
+export type TError = {
   message: string;
 }
 
-type TCredentials = {
+export type TCredentials = {
   accessToken: string;
   refreshToken: string;
 }
 
-type TResponse = { success: boolean };
+export type TResponse = { success: boolean };
 
-type TRefreshTokenResponse = TResponse & TCredentials;
+export type TRefreshTokenResponse = TResponse & TCredentials;
 
-type TSuccessResponse = TResponse & { message: string };
+export type TSuccessResponse = TResponse & { message: string };
 
-type TUserResponse = TResponse &  { user: Omit<TUser, "password"> };
+export type TUserResponse = TResponse & { user: Omit<TUser, "password"> } & {
+  accessToken?: string;
+  refreshToken?: string;
+};
 
-type TAuthResponse = TUserResponse & TCredentials;
+export type TAuthResponse = TUserResponse & TCredentials;
 
-type TOrder = { number: number };
+export type TOrder = { number: number };
 
-type TOrderResponse = TResponse & { name: string } & { order: TOrder };
+export type TOrderResponse = TResponse & { name: string } & { order: TOrder };
 
-type TIngredientsResponse = TResponse & { data: IIngridient[] };
+export type TIngredientsResponse = TResponse & { data: IIngridient[] };
 
 class Api {
   _baseUrl: string;
@@ -158,7 +161,7 @@ async fetchWithRefresh<T>(url: string, options: RequestInit): Promise<T> {
   }
 
   updateUser(user: TUser) {
-    return this.fetchWithRefresh(`${BASE_URL}/api/auth/user`, {
+    return this.fetchWithRefresh<TUserResponse>(`${BASE_URL}/api/auth/user`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",

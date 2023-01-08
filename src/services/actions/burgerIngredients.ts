@@ -1,5 +1,5 @@
 import { api } from "../../utils/api";
-import { IIngridient } from "../../utils/types";
+import { AppDispatch, AppThunk, IIngridient } from "../../utils/types";
 
 export const GET_BURGER_INGRIDIENTS_PENDING: 'GET_BURGER_INGRIDIENTS_PENDING' = "GET_BURGER_INGRIDIENTS_PENDING";
 export const GET_BURGER_INGRIDIENTS_FULFILED: 'GET_BURGER_INGRIDIENTS_FULFILED' =
@@ -36,8 +36,8 @@ export interface IGetBurgerIngridientsPendingAction {
     payload
   })
 
-  export const fetchIngridients = () => {
-    return function (dispatch: any) {
+  export const fetchIngridients: AppThunk = () => {
+    return function (dispatch: AppDispatch) {
       dispatch({
         type: GET_BURGER_INGRIDIENTS_PENDING,
       });

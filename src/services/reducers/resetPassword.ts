@@ -1,9 +1,10 @@
+import { TSuccessResponse } from '../../utils/api';
 import { FORGOT_PASSWORD_PENDING, FORGOT_PASSWORD_FULFILED, FORGOT_PASSWORD_FAILED, RESET_PASSWORD_PENDING, RESET_PASSWORD_FULFILED, RESET_PASSWORD_FAILED } from '../actions/resetPassword';
 import { TResetPasswordActions } from '../actions/resetPassword';
 
 export type TResetPasswordState = {
     isResetPassowrdRequested: boolean;
-    data: null | string;
+    data: TSuccessResponse | null;
     forgotPassordError: null | string;
     forgotPassordPending: boolean;
     resetPassordError: null | string;
