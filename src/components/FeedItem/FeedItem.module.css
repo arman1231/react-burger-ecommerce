@@ -1,0 +1,39 @@
+.feedItem {
+  display: flex;
+  flex-direction: column;
+  min-width: 548px;
+  gap: 24px;
+  padding: 24px;
+  background: #1c1c21;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06),
+    0px 0px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 40px;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.ingredientsAndPrice {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.ingredients {
+    display: flex;
+    flex-direction: row;
+}
+
+.priceWrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.ingredient {
+    border: 4px solid purple;
+    border-radius: 50%;
+}

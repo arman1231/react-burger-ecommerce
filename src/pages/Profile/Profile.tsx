@@ -29,8 +29,9 @@ const Profile: React.FC = () => {
     });
   }
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    const {email, password, name} = state
     e.preventDefault();
-    dispatch(updateUserAction(state));
+    dispatch(updateUserAction(email, password, name));
   }
   const handleLogout: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
     e.preventDefault();

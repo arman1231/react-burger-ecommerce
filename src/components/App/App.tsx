@@ -4,10 +4,6 @@ import Main from "../Main/Main";
 import appStyles from "./App.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  CLEAR_MODAL_INGRIDIENT_DATA,
-  fetchIngridients,
-} from "../../services/actions/cart";
-import {
   Switch,
   Route,
   Redirect,
@@ -25,6 +21,9 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { getUserAction } from "../../services/actions/auth";
 import Modal from "../Modal/Modal";
 import * as H from 'history';
+import { Feed } from "../../pages/Feed/Feed";
+import { fetchIngridients } from "../../services/actions/burgerIngredients";
+import { CLEAR_MODAL_INGRIDIENT_DATA } from "../../services/actions/ingredientDetails";
 
 function App() {
   const history = useHistory();
@@ -106,6 +105,13 @@ function App() {
             component={Profile}
             isLoggedIn={isLoggedIn}
           />
+          <Route path="/feed">
+            <Feed />
+          </Route>
+          <Route path="/feed:id">
+            <Feed />
+          </Route>
+          
           <Route path="*">
             <NotFound />
           </Route>

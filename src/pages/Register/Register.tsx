@@ -27,7 +27,7 @@ const Register: React.FC = () => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const { email, password, name } = state;
-    dispatch(registerAction(state));
+    dispatch(registerAction(email, password, name));
   }
 
   return (

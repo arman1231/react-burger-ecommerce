@@ -1,6 +1,16 @@
-import { FORGOT_PASSWORD_PENDING, FORGOT_PASSWORD_FULFILED, FORGOT_PASSWORD_FAILED, RESET_PASSWORD_PENDING, RESET_PASSWORD_FULFILED, RESET_PASSWORD_FAILED } from '../actions/resetPassword'
+import { FORGOT_PASSWORD_PENDING, FORGOT_PASSWORD_FULFILED, FORGOT_PASSWORD_FAILED, RESET_PASSWORD_PENDING, RESET_PASSWORD_FULFILED, RESET_PASSWORD_FAILED } from '../actions/resetPassword';
+import { TResetPasswordActions } from '../actions/resetPassword';
 
-const resetInitialState = {
+export type TResetPasswordState = {
+    isResetPassowrdRequested: boolean;
+    data: null | string;
+    forgotPassordError: null | string;
+    forgotPassordPending: boolean;
+    resetPassordError: null | string;
+    resetPassordPending: boolean;
+}
+
+const resetInitialState: TResetPasswordState = {
     isResetPassowrdRequested: false,
 
     data: null,
@@ -12,7 +22,7 @@ const resetInitialState = {
     resetPassordPending: false,
 }
 
-export const resetPasswordReducer = (state = resetInitialState, action) => {
+export const resetPasswordReducer = (state = resetInitialState, action: TResetPasswordActions): TResetPasswordState  => {
     switch (action.type) {
         case FORGOT_PASSWORD_PENDING: {
             return {

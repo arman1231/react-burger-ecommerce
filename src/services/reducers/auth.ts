@@ -1,6 +1,28 @@
-import { REGISTER_PENDING, REGISTER_FULFILED, REGISTER_FAILED, LOGIN_PENDING, LOGIN_FULFILED, LOGIN_FAILED, LOGOUT_PENDING, LOGOUT_FULFILED, LOGOUT_FAILED, CLEAR_LOCALSTORAGE, SET_TOKEN, GET_USER_PENDING, GET_USER_FULFILED, GET_USER_FAILED, UPDATE_USER_PENDING, UPDATE_USER_FULFILED, UPDATE_USER_FAILED } from '../actions/auth'
+import { TRegisterResponse } from '../../utils/types';
+import { REGISTER_PENDING, REGISTER_FULFILED, REGISTER_FAILED, LOGIN_PENDING, LOGIN_FULFILED, LOGIN_FAILED, LOGOUT_PENDING, LOGOUT_FULFILED, LOGOUT_FAILED, CLEAR_LOCALSTORAGE, SET_TOKEN, GET_USER_PENDING, GET_USER_FULFILED, GET_USER_FAILED, UPDATE_USER_PENDING, UPDATE_USER_FULFILED, UPDATE_USER_FAILED, TAuthActions } from '../actions/auth';
 
-const authInitialState = {
+export type TAuthState = {
+    isAuthChecked: boolean;
+
+    userData: null | TRegisterResponse;
+  
+    registerUserError: null | string;
+    registerUserPending: boolean;
+  
+    loginUserError: null | string;
+    loginUserPending: boolean;
+  
+    updateUserError: null | string;
+    updateUserPending: boolean;
+  
+    getUserError: null | string;
+    getUserPending: boolean;
+
+    logoutError: null | string;
+    logoutPending: boolean;
+}
+
+const authInitialState: TAuthState = {
     isAuthChecked: false,
 
     userData: null,
@@ -22,7 +44,7 @@ const authInitialState = {
 
 }
 
-export const authReducer = (state = authInitialState, action) => {
+export const authReducer = (state = authInitialState, action: TAuthActions): TAuthState => {
     switch (action.type) {
         case REGISTER_PENDING: {
             return {
@@ -91,8 +113,8 @@ export const authReducer = (state = authInitialState, action) => {
             }
         }
         case SET_TOKEN: {
-            localStorage.setItem('refreshToken', JSON.stringify(state.userData.refreshToken));
-            localStorage.setItem('accessToken', JSON.stringify(state.userData.accessToken));
+            localStorage.setItem('refreshToken', JSON.stringify(state.userData?.refreshToken));
+            localStorage.setItem('accessToken', JSON.stringify(state.userData?.accessToken));
             return {
                 ...state
             }

@@ -25,7 +25,7 @@ import AppHeaderStyle from "./AppHeader.module.css";
               Конструктор
             </span>
           </Link>
-          <Link className={`${AppHeaderStyle.menuLink} ml-2 p-5`} to="#">
+          <Link className={`${AppHeaderStyle.menuLink} ml-2 p-5`} to="/feed">
             <ListIcon type={!isFeed ? 'secondary' : 'primary'} />{" "}
             <span className={`text text_type_main-default ml-2 ${!isFeed && 'text_color_inactive'}`}>
               Лента заказов

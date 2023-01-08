@@ -1,4 +1,14 @@
+import { type } from "os";
 import PropTypes from "prop-types";
+import { Action, ActionCreator, Dispatch } from "redux";
+import { ThunkAction } from "redux-thunk";
+import { store } from "..";
+import { TAuthActions } from "../services/actions/auth";
+import { TGetBurgerIngridientsActions } from "../services/actions/burgerIngredients";
+import { TCartActions } from "../services/actions/cart";
+import { TIngredientDetailsActions } from "../services/actions/ingredientDetails";
+import { TOrderDetailsActions } from "../services/actions/orderDetails";
+import { TResetPasswordActions } from "../services/actions/resetPassword";
 
 export const ingredientType  = PropTypes.shape({
     _id: PropTypes.string.isRequired,
@@ -20,7 +30,8 @@ export const ingredientType  = PropTypes.shape({
     proteins: number,
     type: string,
     __v: number,
-    _id: string
+    _id: string,
+    id: string
   }
 
   export type TUser = {
@@ -38,3 +49,37 @@ export const ingredientType  = PropTypes.shape({
     success: boolean;
     user: Omit<TUser, "password">
   } & TCredentials;
+
+  export type TSuccessResponse = {
+    success: boolean;
+  }
+
+  export type TMakeOrderResponse = {
+    success: boolean;
+    name: string;
+    order: {
+      ingredients: IIngridient[],
+      _id: string,
+      owner: {
+        name: string,
+        email: string,
+        createdAt: string,
+        updatedAt: string
+      },
+      status: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      number: number,
+      price: number
+    }
+  }
+
+  export type RootState = ReturnType<typeof store.getState>;
+
+  type TAplicationActions = TAuthActions | TGetBurgerIngridientsActions | TCartActions | TIngredientDetailsActions | TOrderDetailsActions | TResetPasswordActions;
+
+  export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, Action, RootState, TAplicationActions>>;
+
+  export type AppDispatch = Dispatch<TAplicationActions>;
+

@@ -10,8 +10,6 @@ import {
   ADD_ITEM_TO_CONSTRUCTOR,
   REMOVE_ITEM_FROM_CONSTRUCTOR,
   MOVE_ITEM_IN_CONSTRUCTOR,
-  makeOrderAction,
-  CLEAR_MODAL_ORDER_DETAILS_DATA,
   CLEAR_CONSTRUCTOR,
 } from "../../services/actions/cart";
 import { v4 as uuidv4 } from "uuid";
@@ -21,6 +19,7 @@ import OrderDetails from "../OrderDetails/OrderDetails";
 import Modal from "../Modal/Modal";
 import { useHistory } from "react-router-dom";
 import { IIngridient } from "../../utils/types";
+import { CLEAR_MODAL_ORDER_DETAILS_DATA, makeOrderAction } from "../../services/actions/orderDetails";
 
 export interface IBurgerConstructorIngridient extends IIngridient {
   id: string;

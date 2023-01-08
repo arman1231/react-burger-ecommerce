@@ -1,0 +1,20 @@
+/* .feed {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+} */
+
+.feedDivider {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    gap: 60px;
+}
+.feedList {
+  flex: 1;
+
+}
+
+.feedStatus {
+  flex: 1;
+}

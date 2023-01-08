@@ -4,11 +4,9 @@ import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import {
-  ADD_MODAL_INGRIDIENT_DATA,
-} from "../../services/actions/cart";
 import { useDrag } from "react-dnd";
 import { IIngridient } from '../../utils/types'
+import { ADD_MODAL_INGRIDIENT_DATA } from "../../services/actions/ingredientDetails";
 
 
 interface IBurgerIngridientProps extends IIngridient {
