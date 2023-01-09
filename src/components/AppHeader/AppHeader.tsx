@@ -5,7 +5,8 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FC } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import { Link, useRouteMatch } from "react-router-dom";
 
 import AppHeaderStyle from "./AppHeader.module.css";
@@ -14,7 +15,7 @@ import AppHeaderStyle from "./AppHeader.module.css";
   const isConstructor = !!useRouteMatch({ path: '/', exact: true });
   const isFeed = !!useRouteMatch({ path: '/feed' });
   const isProfile = !!useRouteMatch({ path: '/profile' });
-  const userName = useSelector((state: any) => state.auth?.userData?.user?.name) 
+  const userName = useSelector((state) => state.auth?.userData?.user?.name) 
   return (
     <header className={`${AppHeaderStyle.header} pt-4 pb-4`}>
       <nav className={AppHeaderStyle.menu}>

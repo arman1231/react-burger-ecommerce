@@ -5,13 +5,14 @@ import {
 import styles from "./ForgotPassword.module.css";
 import { Link, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import { forgotPasswordAction } from "../../services/actions/resetPassword";
 
 const ForgotPassword: React.FC = () => {
   const history = useHistory()
-  const dispatch: any = useDispatch();
-  const isEmailCorrect = useSelector((state: any) => state.reset.data?.success)
+  const dispatch= useDispatch();
+  const isEmailCorrect = useSelector((state) => state.reset.data?.success)
   const [state, setState] = useState<{ email: string, password: string }>({
     email: "",
     password: ""

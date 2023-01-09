@@ -36,7 +36,7 @@ export interface IGetBurgerIngridientsPendingAction {
     payload
   })
 
-  export const fetchIngridients: AppThunk = () => {
+  export const fetchIngridients = (): AppThunk => {
     return function (dispatch: AppDispatch) {
       dispatch({
         type: GET_BURGER_INGRIDIENTS_PENDING,

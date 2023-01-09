@@ -1,5 +1,6 @@
 import BurgerIngredientStyles from "./BurgerIngridient.module.css";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import {
   Counter,
   CurrencyIcon,
@@ -21,8 +22,8 @@ const BurgerIngridient: React.FC<IBurgerIngridientProps> = ({
   type,
   el,
 }) => {
-  const dispatch: any = useDispatch();
-  const counter = useSelector((state: any) => state.cart.burgerConstructor);
+  const dispatch = useDispatch();
+  const counter = useSelector((state) => state.cart.burgerConstructor);
 
   function handleClick() {
     dispatch({

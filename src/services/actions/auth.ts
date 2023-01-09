@@ -176,7 +176,7 @@ export const updateUserFailedAction = (payload: string | null): IUpdateUserFaile
   payload
 })
 
-export const registerAction: AppThunk = (email: string, password: string, name: string) => {
+export const registerAction = (email: string, password: string, name: string): AppThunk => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: REGISTER_PENDING,
@@ -201,7 +201,7 @@ export const registerAction: AppThunk = (email: string, password: string, name: 
   };
 };
 
-export const loginAction: AppThunk = (email: string, password: string) => {
+export const loginAction = (email: string, password: string): AppThunk => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGIN_PENDING,
@@ -226,7 +226,7 @@ export const loginAction: AppThunk = (email: string, password: string) => {
   };
 };
 
-export const logoutAction: AppThunk = () => {
+export const logoutAction = (): AppThunk => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGOUT_PENDING,
@@ -256,7 +256,7 @@ export const logoutAction: AppThunk = () => {
   };
 };
 
-export const getUserAction: AppThunk = () => {
+export const getUserAction = (): AppThunk => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_PENDING,
@@ -281,7 +281,7 @@ export const getUserAction: AppThunk = () => {
   };
 };
 
-export const updateUserAction: AppThunk = (email: string, password: string, name: string) => {
+export const updateUserAction = (email: string, password: string, name: string): AppThunk => {
     return function (dispatch: AppDispatch) {
         dispatch({
             type: UPDATE_USER_PENDING

@@ -6,15 +6,16 @@ import {
 import styles from "./ResetPassword.module.css";
 import { Link, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import { resetPasswordAction } from "../../services/actions/resetPassword";
 
 
 const ResetPassword = () => {
   const history = useHistory()
-  const dispatch: any = useDispatch();
-  const isSuccess = useSelector((state: any) => state.reset.data?.message)
-  const isResetPassowrdRequested = useSelector((state: any) => state.reset.isResetPassowrdRequested);
+  const dispatch = useDispatch();
+  const isSuccess = useSelector((state) => state.reset.data?.message)
+  const isResetPassowrdRequested = useSelector((state) => state.reset.isResetPassowrdRequested);
   const [state, setState] = useState<{ code: string, password: string }>({
     code: "",
     password: "",

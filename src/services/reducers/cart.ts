@@ -4,8 +4,8 @@ import { ADD_ITEM_TO_CONSTRUCTOR, REMOVE_ITEM_FROM_CONSTRUCTOR, MOVE_ITEM_IN_CON
 
 export type TCartState = {
     burgerConstructor: {
-        bun: (IBurgerConstructorIngridient | IIngridient | null)[];
-        ingredients: (IBurgerConstructorIngridient | IIngridient | null)[];
+        bun: IBurgerConstructorIngridient[];
+        ingredients: IBurgerConstructorIngridient[];
      }
 }
 

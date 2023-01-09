@@ -1,11 +1,11 @@
-import { IIngridient } from "../../utils/types";
+import { IBurgerConstructorIngridient } from "../../components/BurgerConstructor/BurgerConstructor";
 
 export const ADD_MODAL_INGRIDIENT_DATA: 'ADD_MODAL_INGRIDIENT_DATA' = "ADD_MODAL_INGRIDIENT_DATA";
 export const CLEAR_MODAL_INGRIDIENT_DATA: 'CLEAR_MODAL_INGRIDIENT_DATA' = "CLEAR_MODAL_INGRIDIENT_DATA";
 
 export interface IAddModalIngridientDataAction {
     readonly type: typeof ADD_MODAL_INGRIDIENT_DATA;
-    payload: IIngridient | null;
+    payload: IBurgerConstructorIngridient;
   }
   
   export interface IClearModalIngridientDataAction {
@@ -14,7 +14,7 @@ export interface IAddModalIngridientDataAction {
 
   export type TIngredientDetailsActions = IAddModalIngridientDataAction | IClearModalIngridientDataAction;
 
-  export const addModalIngridientDataAction = (payload: IIngridient | null): IAddModalIngridientDataAction => ({
+  export const addModalIngridientDataAction = (payload: IBurgerConstructorIngridient): IAddModalIngridientDataAction => ({
     type: ADD_MODAL_INGRIDIENT_DATA,
     payload
   })

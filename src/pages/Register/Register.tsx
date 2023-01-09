@@ -7,12 +7,13 @@ import {
 import styles from "./Register.module.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
+import { useDispatch } from "../../utils/hooks";
 import { registerAction } from "../../services/actions/auth";
 import { TUser } from "../../utils/types";
 
 const Register: React.FC = () => {
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
   const [state, setState] = useState<TUser>({
     name: "",
     email: "",

@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import AppHeader from "../AppHeader/AppHeader";
 import Main from "../Main/Main";
 import appStyles from "./App.module.css";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import {
   Switch,
   Route,
@@ -28,13 +29,14 @@ import { CLEAR_MODAL_INGRIDIENT_DATA } from "../../services/actions/ingredientDe
 function App() {
   const history = useHistory();
   const isModalIngridientData = useSelector(
-    (state: any) => state.ingredientDetails.modalIngridientData
+    (state) => state.ingredientDetails.modalIngridientData
   );
   const location = useLocation<{background: H.Location, from: H.Location}>();
   const background = location.state && location.state.background;
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
+
   const data = useSelector(
-    (state: any) => state.burgerIngredients.burgerIngredients
+    (state) => state.burgerIngredients.burgerIngredients
   );
   const isLoggedIn = useSelector((state: any) => state.auth.userData);
 

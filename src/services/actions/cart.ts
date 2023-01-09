@@ -14,7 +14,7 @@ export interface IAddModalOrderDetailsDataAction {
 
 export interface IAddItemToConstructorAction {
   readonly type: typeof ADD_ITEM_TO_CONSTRUCTOR;
-  payload: IIngridient | null;
+  payload: IIngridient;
 }
 
 export interface IRemoveItemFromConstructorAction {
@@ -39,7 +39,7 @@ export const addModalOrderDetailsDataAction = (): IAddModalOrderDetailsDataActio
   type: ADD_MODAL_ORDER_DETAILS_DATA
 })
 
-export const addItemToConstructorAction = (payload: IIngridient | null): IAddItemToConstructorAction => ({
+export const addItemToConstructorAction = (payload: IIngridient): IAddItemToConstructorAction => ({
   type: ADD_ITEM_TO_CONSTRUCTOR,
   payload
 })

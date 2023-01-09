@@ -4,7 +4,8 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerConstructor.module.css";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import { useDrop } from "react-dnd";
 import {
   ADD_ITEM_TO_CONSTRUCTOR,
@@ -31,10 +32,10 @@ export default function BurgerConstructor() {
   const data = useSelector((state: any) => state.cart.burgerConstructor);
   const isDisabled = data.bun.length ? false : true;
   const isMakeOrderData = useSelector(
-    (state: any) => state.orderDetails.orderDetailsData
+    (state) => state.orderDetails.orderDetailsData
   );
   const isMakeOrdredPending = useSelector(
-    (state: any) => state.orderDetails.orderDetailsDataPending
+    (state) => state.orderDetails.orderDetailsDataPending
   );
   const closeOrder = () => {
     dispatch({ type: CLEAR_MODAL_ORDER_DETAILS_DATA });

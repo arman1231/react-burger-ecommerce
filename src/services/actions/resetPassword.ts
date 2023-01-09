@@ -65,7 +65,7 @@ export const resetPasswordFailedAction = (payload: string): IResetPasswordFailed
     payload
 });
 
-export const forgotPasswordAction: AppThunk = (email:string) => {
+export const forgotPasswordAction = (email:string): AppThunk => {
     return function (dispatch: AppDispatch) {
         dispatch({
             type: FORGOT_PASSWORD_PENDING
@@ -88,7 +88,7 @@ export const forgotPasswordAction: AppThunk = (email:string) => {
     }
 }
 
-export const resetPasswordAction: AppThunk = (password: string, token: string) => {
+export const resetPasswordAction = (password: string, token: string): AppThunk => {
     return function (dispatch: AppDispatch) {
         dispatch({
             type: RESET_PASSWORD_PENDING

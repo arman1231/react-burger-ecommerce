@@ -2,7 +2,8 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useRef } from "react";
 import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
 import BurgerIngredientsStyles from "./BurgerIngredients.module.css";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import { useInView } from "react-intersection-observer";
 import { Link, useLocation } from "react-router-dom";
 import { IIngridient } from "../../utils/types";
@@ -10,7 +11,7 @@ import { IIngridient } from "../../utils/types";
 const BurgerIngredients: React.FC = () => {
   let location = useLocation();
   const data = useSelector(
-    (state: any) => state.burgerIngredients.burgerIngredients
+    (state) => state.burgerIngredients.burgerIngredients
   );
   const rootScroll = useRef<HTMLDivElement | null>(null);
 
@@ -54,7 +55,7 @@ const BurgerIngredients: React.FC = () => {
         <div ref={ref} className={BurgerIngredientsStyles.tab}>
           <h2 className="text text_type_main-medium pt-10 pb-6">Булки</h2>
           <ul className={BurgerIngredientsStyles.list}>
-            {data
+            {data!
               .filter((el: IIngridient) => el.type === "bun")
               .map((el: IIngridient) => (
                 <Link
@@ -79,7 +80,7 @@ const BurgerIngredients: React.FC = () => {
         <div ref={ref2} className={BurgerIngredientsStyles.tab}>
           <h2 className="text text_type_main-medium pt-10 pb-6">Соусы</h2>
           <ul className={BurgerIngredientsStyles.list}>
-            {data
+            {data!
               .filter((el: IIngridient) => el.type === "sauce")
               .map((el: IIngridient) => (
                 <Link
@@ -100,7 +101,7 @@ const BurgerIngredients: React.FC = () => {
         <div ref={ref3} className={BurgerIngredientsStyles.tab}>
           <h2 className="text text_type_main-medium pt-10 pb-6">Начинки</h2>
           <ul className={BurgerIngredientsStyles.list}>
-            {data
+            {data!
               .filter((el: IIngridient) => el.type === "main")
               .map((el: IIngridient) => (
                 <Link

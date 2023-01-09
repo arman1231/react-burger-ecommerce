@@ -44,7 +44,7 @@ export interface IClearModalOrderDetailsDataAction {
     payload
   })
 
-  export const makeOrderAction: AppThunk = (data: any) => {
+  export const makeOrderAction = (data: any): AppThunk => {
     return function (dispatch: AppDispatch) {
       dispatch({
         type: MAKE_ORDER_PENDING,
