@@ -76,7 +76,7 @@ export const ingredientType  = PropTypes.shape({
 
   export type RootState = ReturnType<typeof store.getState>;
 
-  type TAplicationActions = TAuthActions | TGetBurgerIngridientsActions | TCartActions | TIngredientDetailsActions | TOrderDetailsActions | TResetPasswordActions;
+  export type TAplicationActions = TAuthActions | TGetBurgerIngridientsActions | TCartActions | TIngredientDetailsActions | TOrderDetailsActions | TResetPasswordActions;
 
   // export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, Action, RootState, TAplicationActions>>;
   export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TAplicationActions>;
